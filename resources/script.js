@@ -162,6 +162,11 @@ number_array[(i-1)]=slump;
     //TODO:  ( ) när alla td_scores i övre blocket har "valts" av spelaren räknas bonusen ut och visas
     //TODO:  ( ) när tärningar kastas visas alla möjliga poäng även i övre blocket
     //TODO:  (/) skriv ut summan under övre blocket alltefter deras td score "valts"
+    //TODO:  ( ) Styling: Highlighta alla valda/upptagna td:s.
+    //TODO:  ( ) Styling: Highlighta alla möjliga td:s att välja på som har poäng.
+
+
+
 
 
 
@@ -289,7 +294,7 @@ number_array[(i-1)]=slump;
             return 0;
         }
     }
-
+    //!  YATZY FUNCTION
     function calcYatzy(numbers_array) {
         console.log("nu testar vi Yatzy");
         let arr = countDice(numbers_array);
@@ -302,6 +307,7 @@ number_array[(i-1)]=slump;
         }
 
     }
+    //! CHANCE FUNCTION
 
     function calcChance(numbers_array) {
         console.log("nu testar vi Chance");
@@ -336,13 +342,13 @@ function randomDiceArray() {
 }
 
 //! RÄKNA HUR MÅNGA TÄRNINGAR AV VARJE
-function countDice(dice_array) {
+function countDice(dice_array) {    //// dice_array innehåller de slumpade tärningarnas värden [2, 4, 4, 1, 3]
     let values_array = []; ////Skapa en tom array
     for (let i = 0; i <= 6; i++) { //// assignar värdet 0 till varje index i values
         values_array[i] = 0;
     }
     // [0, 0, 0, 0, 0, 0, 0]    //// arrayen nu
-    // [0, 1, 2, 3, 4, 5, 6]    //// arrayens index
+    // [0, 1, 1, 1, 2, 0, 0]    //// arrayens index
 
     for (let current_dice of dice_array) { 
         values_array[current_dice]++;
