@@ -1,0 +1,217 @@
+
+/*=========================================
+                    MAIN
+=========================================*/
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+
+    color: rgb(15, 61, 34);
+    font-size: 3em;
+    margin: 0.1em;
+}
+
+table {
+    width: 30em; 
+    border: 2px solid black; 
+    border-collapse: collapse; 
+}
+
+.yatsySida  {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td, th {
+    text-align: left;
+    height: 15px;
+    padding: 5px;
+    border: 1px solid black; 
+}
+
+th {
+    border: 2px solid black; 
+}
+
+input {
+    border: none;
+    width: 25px;
+}
+
+input:focus {
+    outline: none;
+}
+
+td:nth-child(even) input, td:nth-child(even) {
+    background-color: rgb(205, 255, 226);
+}
+
+td:nth-child(odd) input, td:nth-child(odd) {
+    background-color: rgb(238, 255, 245);
+}
+
+.lightGrey input, .lightGrey {
+    background-color: rgb(76, 146, 109);
+}
+
+.darkGrey {
+    background-color: rgb(60, 117, 87);
+    color: white; 
+}
+
+
+/*=========================================
+                    CHAT
+=========================================*/
+
+
+
+.chat {
+    position: relative;
+    margin:10px;
+    width: 300px;
+    height: 600px;
+    background-color: rgb(157, 209, 179);
+    padding: 10px ;
+    border: 2px solid black ;
+}
+
+#chatHeader {
+    border-right-width: 200px;
+
+}
+
+.messages, #chatBox {
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 10px; 
+    padding: 10px;
+    color: rgb(0, 0, 0);
+}
+
+#me {
+    clear: both;
+    float: right;
+    background-color: rgb(241, 255, 247);
+}
+
+#you {
+    clear: both;
+    float: left;
+    background-color: rgb(194, 245, 215);
+}
+
+#chatBox{
+    position: absolute;
+    width: 185px;
+    bottom: 5px;
+    background-color: rgb(241, 255, 247);
+
+}
+
+input{
+    width: 100%;
+    background-color: rgb(241, 255, 247);
+
+}
+
+.button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    text-decoration:none;
+    width: fit-content;
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 10px; 
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(194, 245, 215);
+
+}
+
+.button:hover {
+    color: #fff;
+    background:#bf7bdf;
+
+}
+
+
+/*=========================================
+              LANDING PAGE
+=========================================*/
+
+.landingPageBody > h1{
+    text-align: center;
+    margin: 20px;
+    font-size: 2.5em;
+}
+.landingPageBody{
+    background-color: rgb(157, 209, 179);
+
+}
+
+.content{
+    position: relative;
+    margin: auto;
+    width: fit-content;
+
+}
+
+.landing-btn {
+    display: inline-block;
+    width: fit-content;
+    border: 0.15em solid black;
+    border-radius: 50px;
+    margin: 10px; 
+    padding: 15px 25px;
+    text-decoration:none;
+
+}
+
+#register {
+    background-color: rgb(42, 90, 62);
+}
+
+#login {
+    background-color: rgb(227, 248, 236);
+}
+
+#forgotPassword > a {
+    display: inline-block;
+    top: 20px;
+    margin: 20px;
+    font-size: 0.7em;
+    margin: 20px; 
+
+}
+
+.content, a {
+    font-size: 25px;
+    text-decoration:none;
+    color: rgb(0, 0, 0);
+}
+
+#register > a {
+    color:  rgb(227, 248, 236);
+
+
+}
+
+#register:hover, #login:hover {
+    background-color: rgb(255, 248, 151);
+}
+
+#register:hover > a {
+    color: black;
+}
+
+.diceImg{
+    margin: auto;
+    width: 30%;
+    display: block;
+}

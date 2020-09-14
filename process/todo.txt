@@ -1,0 +1,61 @@
+
+Maja tänker i skrift: SPELSCENARIOT
+
+____________________________________________________________
+
+(Ev nånting som ber om antal spelare och anpassar spelbrädet efter det)
+
+Nånting som säger att fylla i namn på spelare
+
+___________________________________________________
+
+
+while (det finns total score som inte är ifyllda) {
+	
+	for (player in playerarray) //loop som kör igenom alla spelare med tilldelade namn
+		gameplay(player)
+		
+}
+räkna ut totala summan längs ner
+_____
+
+
+
+Funktion som kallas på en gång för varje spelare WHILE alla slutresultat inte är satta:
+		
+funktion  gameplay (player)	
+
+
+		sätt kast kvar -> 3
+		call reset keepers function
+
+		let score_chosen = false; 
+
+		while (score_chosen = false) {		==en omgång==
+
+			eventlistener click kasta-tärning-button 	==ett kast==
+
+				if ( kast kvar )
+					visa möjliga poäng osv, kast kvar -1
+	
+					eventlistener click td_score_array[player] {
+						score_chosen = true;
+
+		
+				else (kast kvar 0)
+				
+					”inga kast kvar, nästa spelares tur. välj din poäng”
+					inga tärningar ändras (kallar ej på random dice)
+
+					eventlistener click td_score_array[player] {
+						score_chosen = true;
+
+			}
+		)
+		if (alla td_scores i övre blocket har "valts")
+			räkna ut summan i mitten
+			räkna ut bonus
+
+		"nästa spelares tur"
+		
+}		
