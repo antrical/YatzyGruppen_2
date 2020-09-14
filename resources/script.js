@@ -197,8 +197,8 @@ number_array[(i-1)]=slump;
             //TODO:                                                                 
             //TODO:    ( ) Pair                                                     
             //TODO:    ( ) Two pairs                                                
-            //TODO:    ( ) Four of a kind                                           
-            //TODO:    ( ) Three of a kind                                          
+            //TODO:    (x) Four of a kind                                           
+            //TODO:    (x) Three of a kind                                          
             //TODO:    (x) sm_straight                                              
             //TODO:    (x) lg_straight                                              
             //TODO:    (x) Full house                                               
@@ -208,6 +208,8 @@ number_array[(i-1)]=slump;
 
 
 
+            p1_three_kind.value = calcThreeKind(dice_values_array); //// Möjligt tretal detta kast? skickar värde
+            p1_four_kind.value = calcFourKind(dice_values_array); //// Möjligt fyrtal detta kast? skickar värde
             p1_house.value = calcFullHouse(dice_values_array);   //// Möjlig kåk detta kast? skickar värde
             p1_sm_str.value = calcSmStraight(dice_values_array); //// Möjlig small straight detta kast? skickar värde
             p1_lg_str.value = calcLgStraight(dice_values_array); //// Möjlig large straight detta kast? skickar värde
@@ -239,6 +241,34 @@ number_array[(i-1)]=slump;
 
     //* GAME SCORE FUNCTIONS
     //=====================//
+
+    //! THREE OF A KIND FUNCTION
+    function calcThreeKind(numbers_array) {
+        let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
+        let three_kind = 0;
+    
+        if (arr.indexOf(3) > 0) {
+            three_kind = arr.indexOf(3); //// returnar index av ev värde 3 i arrayen
+            return (three_kind*3);
+        }
+        else{
+            return 0;
+        }
+    }
+
+    //! FOUR OF A KIND FUNCTION
+    function calcFourKind(numbers_array) {
+        let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
+        let four_kind = 0;
+    
+        if (arr.indexOf(4) > 0) {
+            four_kind = arr.indexOf(4); //// returnar index av ev värde 4 i arrayen
+            return (four_kind*4);
+        }
+        else{
+            return 0;
+        }
+    }
 
     //!  FULL HOUSE FUNCTION
     function calcFullHouse(numbers_array) {
