@@ -297,13 +297,12 @@ number_array[(i-1)]=slump;
         let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
         let three_kind = 0;
     
-        if (arr.indexOf(3) > 0) {
-            three_kind = arr.indexOf(3); //// returnar index av ev värde 3 i arrayen
-            return (three_kind*3);
+        for (let i=3; i<=5; i++){ ////Kollar ifall det finns minst tre tärningar med samma värde
+            if (arr.indexOf(i) > 0) {
+                three_kind = arr.indexOf(i); //// returnar index av ev värde 3, 4 eller 5 i arrayen
+            }
         }
-        else{
-            return 0;
-        }
+        return (three_kind*3);
     }
 
     //! FOUR OF A KIND FUNCTION
@@ -311,13 +310,12 @@ number_array[(i-1)]=slump;
         let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
         let four_kind = 0;
     
-        if (arr.indexOf(4) > 0) {
-            four_kind = arr.indexOf(4); //// returnar index av ev värde 4 i arrayen
-            return (four_kind*4);
+        for (let i=4; i<=5; i++){ ////Kollar ifall det finns minst fyra tärningar med samma värde
+            if (arr.indexOf(i) > 0) {
+                four_kind = arr.indexOf(i); //// returnar index av ev värde 4 eller 5 i arrayen
+            }
         }
-        else{
-            return 0;
-        }
+        return (four_kind*4);
     }
 
     //!  FULL HOUSE FUNCTION
