@@ -43,7 +43,7 @@ document.getElementById("image_"+i).src=("dice_img_"+slump+".png")
 number_array[(i-1)]=slump;
 }}
   console.log (number_array);
-  }})*/
+  }}) */
 
     ////tärnings-buttons att trycka på för att spara
     document.getElementById("toggle_1").addEventListener("click", function(event){
