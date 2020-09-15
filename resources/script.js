@@ -45,6 +45,10 @@ number_array[(i-1)]=slump;
   console.log (number_array);
   }}) */
 
+
+
+
+
     ////tärnings-buttons att trycka på för att spara
     document.getElementById("toggle_1").addEventListener("click", function(event){
         event.preventDefault();
@@ -72,6 +76,17 @@ number_array[(i-1)]=slump;
         console.log("toggled");
     });;;
     
+    //// Skapar en HTML Collection av td 1-6 för Player 1
+    let td_P1_block1 = document.getElementById("block1").getElementsByClassName("player1");
+    //// Skapar en Array från vår hTML Collection
+    let td_P1_block1_arr = Array.from(td_P1_block1);
+    //// Skapar en Array 
+    let td_P1_block1_arr_int = td_P1_block1_arr.map((element, index, array) => { return parseInt(element.value)});
+
+    console.log(td_P1_block1_arr_int);  
+
+
+
 
 
     let p1_td_score_array = [
@@ -178,6 +193,18 @@ number_array[(i-1)]=slump;
         let random_throw = randomDiceArray();
         console.log("Fem slumpade tärningar: " + random_throw); // Tärningarna som slumpades fram
 
+
+        let checkBoxCollection = document.getElementById("keep_value").getElementsByTagName("input");
+
+        let checkBoxArray = Array.from(checkBoxCollection);
+        
+        let checkBoxChecked = checkBoxArray.filter((value, index, array) => {
+            return value;
+        });
+        
+        console.log(checkBoxChecked);
+
+
         //// & om man har inte slagit tre gånger redan
         if (throws_left > 0) {
             for (let i = 0; i < 5; i++) {
@@ -205,7 +232,8 @@ number_array[(i-1)]=slump;
             //TODO:    (x) chance                                                   
             //TODO:    (x) yatzy                                                    
             //TODO:                                                                 
-
+            
+            //console.log(td_P1);
 
 
             p1_three_kind.value = calcThreeKind(dice_values_array); //// Möjligt tretal detta kast? skickar värde
@@ -217,6 +245,9 @@ number_array[(i-1)]=slump;
             p1_chance.value = calcChance(dice_values_array); //// Möjlig Chance detta kast? skickar värde
 
         }
+
+
+
         console.log("Nya tärningskastet med sparade tärningar: " + dice_values_array);
         // throws_left --;  ////pausad tills vidare, slå på sen
     });
