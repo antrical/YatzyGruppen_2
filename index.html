@@ -13,192 +13,196 @@
      
         <table>
             <thead>
-                <tr class="lightGrey">
+                <tr id="players" class="lightGrey">
                     <th class="darkGrey">Player</th>
-                    <th><input id="player1" type="text"></th>
-                    <th><input id="player2" type="text"></th>
-                    <th><input id="player3" type="text"></th>
-                    <th><input id="player4" type="text"></th>
+                    <th><input class="player1" type="text"></th>
+                    <th><input class="player2" type="text"></th>
+                    <th><input class="player3" type="text"></th>
+                    <th><input class="player4" type="text"></th>
                 </tr>
             </thead>
                 <tbody id="block1">
                     <tr id="ones">
                         <td>Ones</td>
-                        <td><input id="player1_ones" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_ones" class="player2" type="text"></td>
-                        <td><input id="player3_ones" class="player3" type="text"></td>
-                        <td><input id="player4_ones" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
                     
                     <tr id="twos">
                         <td>Twos</td>
-                        <td><input id="player1_twos" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_twos" class="player2" type="text"></td>
-                        <td><input id="player3_twos" class="player3" type="text"></td>
-                        <td><input id="player4_twos" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
 
                     <tr id="threes">
                         <td>Threes</td>
-                        <td><input id="player1_threes" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_threes" class="player2" type="text"></td>
-                        <td><input id="player3_threes" class="player3" type="text"></td>
-                        <td><input id="player4_threes" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
 
                     <tr id="fours">
                         <td>Fours</td>
-                        <td><input id="player1_fours" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_fours" class="player2" type="text"></td>
-                        <td><input id="player3_fours" class="player3" type="text"></td>
-                        <td><input id="player4_fours" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
 
                     <tr id="fives">
                         <td>Fives</td>
-                        <td><input id="player1_fives" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_fives" class="player2" type="text"></td>
-                        <td><input id="player3_fives" class="player3" type="text"></td>
-                        <td><input id="player4_fives" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
 
                     <tr id="sixes">
                         <td>Sixes</td>
-                        <td><input id="player1_sixes" class="player1" type="text" value="1"></td>
-                        <td><input id="player2_sixes" class="player2" type="text"></td>
-                        <td><input id="player3_sixes" class="player3" type="text"></td>
-                        <td><input id="player4_sixes" class="player4" type="text"></td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
                     </tr>
 
                 </tbody>
-
-                <tr class="lightGrey">
+                
+                <tr id="sum" class="lightGrey">
                     <th class="darkGrey">Sum</th>
-                    <th id="player1_sum" class="player1"></th>
-                    <th id="player2_sum" class="player2"></th>
-                    <th id="player3_sum" class="player3"></th>
-                    <th id="player4_sum" class="player4"></th>
+                    <th class="player1"></th>
+                    <th class="player2"></th>
+                    <th class="player3"></th>
+                    <th class="player4"></th>
                 </tr>
 
-                <tr class="lightGrey">
+                <tr id="bonus" class="lightGrey">
                     <th class="darkGrey">Bonus</th>
-                    <th id="player1_bonus" class="player1"></th>
-                    <th id="player2_bonus" class="player2"></th>
-                    <th id="player3_bonus" class="player3"></th>
-                    <th id="player4_bonus" class="player4"></th>
+                    <th class="player1"></th>
+                    <th class="player2"></th>
+                    <th class="player3"></th>
+                    <th class="player4"></th>
                 </tr>
 
-                <tr id="pair">
-                    <td>Pair</td>
-                    <td><input id="p1_pair" class="player1" type="text"></td>
-                    <td><input id="p2_pair" class="player2" type="text"></td>
-                    <td><input id="p3_pair" class="player3" type="text"></td>
-                    <td><input id="p4_pair" class="player4" type="text"></td>
-                </tr>
+                <tbody id="block2">
+                    <tr id="pair">
+                        <td>Pair</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="twoPairs">
-                    <td>Two pairs</td>
-                    <td><input id="p1_two_pairs" class="player1" type="text"></td>
-                    <td><input id="p2_two_pairs" class="player2" type="text"></td>
-                    <td><input id="p3_two_pairs" class="player3" type="text"></td>
-                    <td><input id="p4_two_pairs" class="player4" type="text"></td>
-                </tr>
+                    <tr id="twoPairs">
+                        <td>Two pairs</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
 
-                <tr id="threeOfAKind">
-                    <td>Three of a kind</td>
-                    <td><input id="p1_three_kind" class="player1" type="text"></td>
-                    <td><input id="p2_three_kind" class="player2" type="text"></td>
-                    <td><input id="p3_three_kind" class="player3" type="text"></td>
-                    <td><input id="p4_three_kind" class="player4" type="text"></td>
-                </tr>
+                    <tr id="threeOfAKind">
+                        <td>Three of a kind</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="fourOfAKind">
-                    <td>Four of a kind</td>
-                    <td><input id="p1_four_kind" class="player1" type="text"></td>
-                    <td><input id="p2_four_kind" class="player2" type="text"></td>
-                    <td><input id="p3_four_kind" class="player3" type="text"></td>
-                    <td><input id="p4_four_kind" class="player4" type="text"></td>
-                </tr>
+                    <tr id="fourOfAKind">
+                        <td>Four of a kind</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="smallStraight">
-                    <td>Small straight</td>
-                    <td><input id="p1_sm_str" class="player1" type="text"></td>
-                    <td><input id="p2_sm_str" class="player2" type="text"></td>
-                    <td><input id="p3_sm_str" class="player3" type="text"></td>
-                    <td><input id="p4_sm_str" class="player4" type="text"></td>
-                </tr>
+                    <tr id="smallStraight">
+                        <td>Small straight</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="largeStraight">
-                    <td>Large straight</td>
-                    <td><input id="p1_lg_str" class="player1" type="text"></td>
-                    <td><input id="p2_lg_str" class="player2" type="text"></td>
-                    <td><input id="p3_lg_str" class="player3" type="text"></td>
-                    <td><input id="p4_lg_str" class="player4" type="text"></td>
-                </tr>
+                    <tr id="largeStraight">
+                        <td>Large straight</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="fullHouse">
-                    <td>Full House</td>
-                    <td><input id="p1_house" class="player1" type="text"></td>
-                    <td><input id="p2_house" class="player2" type="text"></td>
-                    <td><input id="p3_house" class="player3" type="text"></td>
-                    <td><input id="p4_house" class="player4" type="text"></td>
-                </tr>
+                    <tr id="fullHouse">
+                        <td>Full House</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="chance">
-                    <td>Chance</td>
-                    <td><input id="p1_chance" class="player1" type="text"></td>
-                    <td><input id="p2_chance" class="player2" type="text"></td>
-                    <td><input id="p3_chance" class="player3" type="text"></td>
-                    <td><input id="p4_chance" class="player4" type="text"></td>
-                </tr>
+                    <tr id="chance">
+                        <td>Chance</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
+                    </tr>
 
-                <tr id="yatzy">
-                    <td>Yatzy</td>
-                    <td><input id="p1_yatzy" class="player1" type="text"></td>
-                    <td><input id="p2_yatzy" class="player2" type="text"></td>
-                    <td><input id="p3_yatzy" class="player3" type="text"></td>
-                    <td><input id="p4_yatzy" class="player4" type="text"></td>
+                    <tr id="yatzy">
+                        <td>Yatzy</td>
+                        <td><input class="player1" type="text"></td>
+                        <td><input class="player2" type="text"></td>
+                        <td><input class="player3" type="text"></td>
+                        <td><input class="player4" type="text"></td>
 
-                </tr>
+                    </tr>
+                </tbody>
+                
 
-                <tr class="lightGrey">
+                <tr id="total" class="lightGrey">
                     <th class="darkGrey">Total</th>
-                    <th><input id="p1_total" class="player1" type="text"></th>
-                    <th><input id="p2_total" class="player2" type="text"></th>
-                    <th><input id="p3_total" class="player3" type="text"></th>
-                    <th><input id="p4_total" class="player4" type="text"></th>
+                    <th><input class="player1" type="text"></th>
+                    <th><input class="player2" type="text"></th>
+                    <th><input class="player3" type="text"></th>
+                    <th><input class="player4" type="text"></th>
                 </tr>
 
-                <!--<button id="calc">Räkna ut</button>-->
 
-              <script src="resources/script.js"></script>
     
             <tbody>
                
     </table>
     </div>
-    
     <div class="dice_section">
-            <button id="toggle_1"><img id="dice_cell_1" src="resources/images/dice/dice-zero.png"></button>
-            <button id="toggle_2"><img id="dice_cell_2" src="resources/images/dice/dice-zero.png"></button>
-            <button id="toggle_3"><img id="dice_cell_3" src="resources/images/dice/dice-zero.png"></button>
-            <button id="toggle_4"><img id="dice_cell_4" src="resources/images/dice/dice-zero.png"></button>
-            <button id="toggle_5"><img id="dice_cell_5" src="resources/images/dice/dice-zero.png"></button>
-        </div>
-        <br>
-        <form>
-            <div id="keep_value">
-            <input type="checkbox" id="dice_1" value="box1"> 
-            <input type="checkbox" id="dice_2" value="box2">
-            <input type="checkbox" id="dice_3" value="box3">
-            <input type="checkbox" id="dice_4" value="box4">
-            <input type="checkbox" id="dice_5" value="box5">
-        </div>
-        </form>
-        <br>
-        <button id="roll_dice" class="roll_dice">ROLL<br>DICE</button>
-    </body>
+        <button id="toggle_1"><img id="dice_cell_1" src="resources/images/dice/dice-0.png"></button>
+        <button id="toggle_2"><img id="dice_cell_2" src="resources/images/dice/dice-0.png"></button>
+        <button id="toggle_3"><img id="dice_cell_3" src="resources/images/dice/dice-0.png"></button>
+        <button id="toggle_4"><img id="dice_cell_4" src="resources/images/dice/dice-0.png"></button>
+        <button id="toggle_5"><img id="dice_cell_5" src="resources/images/dice/dice-0.png"></button>
+    </div>
+    <br>
+    <form>
+        <div id="keep_value">
+        <input type="checkbox"> 
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="checkbox">
+    </div>
+    </form>
+    <br>
+    <button id="roll_dice" class="roll_dice">ROLL<br>DICE</button>
+    
+    
+    <script src="resources/script.js"></script>
+</body>
+    
 
 
 </html>
