@@ -86,8 +86,27 @@ number_array[(i-1)]=slump;
     console.log(td_P1_block1_arr_int);  
 
 
+    ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
+    p1_sum.innerHTML = td_P1_block1_arr_int.reduce((acc, currValue) => {
+        return acc + currValue;
+    }, 0); ////Amanda: Funkar för nu eftersom vi redan har values 1 block1, behöver flyttas till efter tärningarna har kastats
 
+    if (p1_sum.innerHTML >= 63) {  ////Amanda: flyttade bonusen hit, så den ligger i samband med att sum beräknas
+        p1_bonus.innerHTML = 50;   
+    } 
+    else {
+        p1_bonus.innerHTML = 0;
+    }
 
+    ////Amanda: Gör samma sak för block 2
+    let td_P1_block2 = document.getElementById("block2").getElementsByClassName("player1");
+    let td_P1_block2_arr = Array.from(td_P1_block2);
+    let td_P1_block2_arr_int = td_P1_block2_arr.map((element) => { return parseInt(element.value)});
+
+    
+    p1_total.innerHTML = td_P1_block2_arr_int.reduce((acc, currValue) => {
+        return acc + currValue;
+    }, 0); ////Amanda: funkar inte för nu, måste flyttas till efter tärningarna har kastats
 
     let p1_td_score_array = [
         p1_ones,  ////Amanda: Behövs den här arrayen längre?       Maja: jo hittills iaf!
@@ -117,7 +136,7 @@ number_array[(i-1)]=slump;
 
     let sum = 0;
 
-    //sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
+    /*/sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
     //// La in Amandas i en loop istället, kallar fortf på Erikas addToSum vid varje td "change"
     //// Varje td score får varsin eventlistener: /M
     for (let td_score of p1_td_score_array) {
@@ -131,7 +150,7 @@ number_array[(i-1)]=slump;
                 p1_bonus.innerHTML = 0;
             }
         });
-    }
+    }*/
 
     
 
