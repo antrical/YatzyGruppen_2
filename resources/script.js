@@ -212,13 +212,13 @@ number_array[(i-1)]=slump;
         let random_throw = randomDiceArray();
         console.log("Fem slumpade tärningar: " + random_throw); // Tärningarna som slumpades fram
 
-
+        //fixar check box
         let checkBoxCollection = document.getElementById("keep_value").getElementsByTagName("input");
-
-        let checkBoxArray = Array.from(checkBoxCollection);
-        
-        let checkBoxChecked = checkBoxArray.filter((value, index, array) => {
-            return value;
+        console.log(checkBoxCollection)
+         checkBoxCollection = Array.from(checkBoxCollection);
+         console.log(checkBoxCollection)
+        let checkBoxChecked = checkBoxCollection.filter((value, index, array) => {
+            return value.checked;//ger  en array som innehåller referens till alla kryssade rutor
         });
         
         console.log(checkBoxChecked);
