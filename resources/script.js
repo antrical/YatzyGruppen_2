@@ -20,6 +20,22 @@ document.addEventListener("DOMContentLoaded", function(e){
     let p1_total = document.getElementById("p1_total");
 
 
+    ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
+    p1_sum.innerHTML = td_P1_block1_arr_int.reduce((acc, currValue) => {
+        return acc + currValue;
+    }, 0); ////Amanda: Funkar för nu eftersom vi redan har values 1 block1, behöver flyttas till efter tärningarna har kastats
+
+    if (p1_sum.innerHTML >= 63) {  ////Amanda: flyttade bonusen hit, så den ligger i samband med att sum beräknas
+        p1_bonus.innerHTML = 50;   
+    } 
+    else {
+        p1_bonus.innerHTML = 0;
+    }
+
+    ////Amanda: Gör samma sak för block 2
+    let td_P1_block2 = document.getElementById("block2").getElementsByClassName("player1");
+    let td_P1_block2_arr = Array.from(td_P1_block2);
+    let td_P1_block2_arr_int = td_P1_block2_arr.map((element) => { return parseInt(element.value)});
 
 
     /*  p1.addEventListener("change", function(e) {
@@ -41,6 +57,12 @@ document.addEventListener("DOMContentLoaded", function(e){
     } */
    
 
+    
+    p1_total.innerHTML = td_P1_block2_arr_int.reduce((acc, currValue) => {
+        return acc + currValue;
+    }, 0); ////Amanda: funkar inte för nu, måste flyttas till efter tärningarna har kastats
+
+
 
 
     let keep_click_arr = [false, false, false, false, false];
@@ -60,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(e){
   
     let sum = 0;
 
-    //sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
+    /*/sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
     //// La in Amandas i en loop istället, kallar fortf på Erikas addToSum vid varje td "change"
     //// Varje td score får varsin eventlistener: /M
     for (let td_score of p1_block1_arr) {
@@ -74,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 p1_bonus.innerHTML = 0;
             }
         });
-    }
+    }*/
 
     
 
@@ -131,12 +153,26 @@ document.addEventListener("DOMContentLoaded", function(e){
         console.log("Fem slumpade tärningar: " + random_throw); // Tärningarna som slumpades fram
 
 
+
         /* let checkBoxArray = Array.from(document.getElementById("keep_value").getElementsByTagName("input"));
         let checkBoxArray = Array.from(checkBoxCollection);
         let checkBoxChecked = checkBoxArray.filter((object, index, array) => {
             return this.checked === true;
         }); */ //Behövs typ inte tror jag men det verkar funka
         
+
+        //fixar check box
+        let checkBoxCollection = document.getElementById("keep_value").getElementsByTagName("input");
+        console.log(checkBoxCollection)
+         checkBoxCollection = Array.from(checkBoxCollection);
+         console.log(checkBoxCollection)
+        let checkBoxChecked = checkBoxCollection.filter((value, index, array) => {
+            return value.checked;//ger  en array som innehåller referens till alla kryssade rutor
+        });
+        
+        console.log(checkBoxChecked);
+
+
 
         //// & om man har inte slagit tre gånger redan
         if (throws_left > 0) {
@@ -239,13 +275,12 @@ document.addEventListener("DOMContentLoaded", function(e){
         let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
         let three_kind = 0;
     
-        if (arr.indexOf(3) > 0) {
-            three_kind = arr.indexOf(3); //// returnar index av ev värde 3 i arrayen
-            return (three_kind*3);
+        for (let i=3; i<=5; i++){ ////Kollar ifall det finns minst tre tärningar med samma värde
+            if (arr.indexOf(i) > 0) {
+                three_kind = arr.indexOf(i); //// returnar index av ev värde 3, 4 eller 5 i arrayen
+            }
         }
-        else{
-            return 0;
-        }
+        return (three_kind*3);
     }
 
     //! FOUR OF A KIND FUNCTION
@@ -253,13 +288,12 @@ document.addEventListener("DOMContentLoaded", function(e){
         let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
         let four_kind = 0;
     
-        if (arr.indexOf(4) > 0) {
-            four_kind = arr.indexOf(4); //// returnar index av ev värde 4 i arrayen
-            return (four_kind*4);
+        for (let i=4; i<=5; i++){ ////Kollar ifall det finns minst fyra tärningar med samma värde
+            if (arr.indexOf(i) > 0) {
+                four_kind = arr.indexOf(i); //// returnar index av ev värde 4 eller 5 i arrayen
+            }
         }
-        else{
-            return 0;
-        }
+        return (four_kind*4);
     }
 
     //!  FULL HOUSE FUNCTION
