@@ -20,23 +20,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     let p1_total = document.getElementById("p1_total");
 
 
-    ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
-    p1_sum.innerHTML = td_P1_block1_arr_int.reduce((acc, currValue) => {
-        return acc + currValue;
-    }, 0); ////Amanda: Funkar för nu eftersom vi redan har values 1 block1, behöver flyttas till efter tärningarna har kastats
 
-    if (p1_sum.innerHTML >= 63) {  ////Amanda: flyttade bonusen hit, så den ligger i samband med att sum beräknas
-        p1_bonus.innerHTML = 50;   
-    } 
-    else {
-        p1_bonus.innerHTML = 0;
-    }
 
-    ////Amanda: Gör samma sak för block 2
-    let td_P1_block2 = document.getElementById("block2").getElementsByClassName("player1");
-    let td_P1_block2_arr = Array.from(td_P1_block2);
-    let td_P1_block2_arr_int = td_P1_block2_arr.map((element) => { return parseInt(element.value)});
-
+ 
 
     /*  p1.addEventListener("change", function(e) {
         p1= p1.value;
@@ -58,10 +44,7 @@ document.addEventListener("DOMContentLoaded", function(e){
    
 
     
-    p1_total.innerHTML = td_P1_block2_arr_int.reduce((acc, currValue) => {
-        return acc + currValue;
-    }, 0); ////Amanda: funkar inte för nu, måste flyttas till efter tärningarna har kastats
-
+    
 
 
 
@@ -82,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(e){
   
     let sum = 0;
 
-    /*/sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
+    //sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
     //// La in Amandas i en loop istället, kallar fortf på Erikas addToSum vid varje td "change"
     //// Varje td score får varsin eventlistener: /M
     for (let td_score of p1_block1_arr) {
@@ -96,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 p1_bonus.innerHTML = 0;
             }
         });
-    }*/
+    }
 
     
 
@@ -139,9 +122,18 @@ document.addEventListener("DOMContentLoaded", function(e){
     //TODO:  ( ) Styling: Highlighta alla valda/upptagna td:s.
     //TODO:  ( ) Styling: Highlighta alla möjliga td:s att välja på som har poäng.
 
+   
 
-
-
+    let yTable=document.getElementById("yatzyTable");
+    yTable.addEventListener("click", function(e){
+        if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
+            // e.target.innerHTML.disabled = true;
+            e.target.style.opacity = "0.5";
+            e.target.style.setProperty("font-weight", "bold");
+            console.log("CLICK!");
+            throws_left = 3;
+        }
+    })
 
 
 
@@ -172,6 +164,17 @@ document.addEventListener("DOMContentLoaded", function(e){
         
         console.log(checkBoxChecked);
 
+        let block_2_func_arr = [
+            calcTwoPairs,
+            calcTwoPairs,
+            calcThreeKind,
+            calcFourKind,
+            calcSmStraight,
+            calcLgStraight,
+            calcFullHouse,
+            calcChance,
+            calcYatzy
+        ];
 
 
         //// & om man har inte slagit tre gånger redan
@@ -179,8 +182,8 @@ document.addEventListener("DOMContentLoaded", function(e){
             for (let i = 0; i < 5; i++) {
 
                 ////om tärning index [i] inte ska sparas:
-                if (!checkBoxArray[i].checked) {   //// Alt till att klicka på själva tärningen
-                //if (!keep_click_arr[i]) {   //// (keep_click_arr[i] === false) båda funkar nu
+                //if (!checkBoxArray[i].checked) {   //// Alt till att klicka på själva tärningen
+                if (!keep_click_arr[i]) {   //// (keep_click_arr[i] === false) båda funkar nu
                     dice_shown_img_arr[i].src = dice_png_array[random_throw[i]];  //// byter bild motsvarande randomized tärningskast-array
                     dice_values_array[i] = random_throw[i];
                 }   
@@ -208,15 +211,24 @@ document.addEventListener("DOMContentLoaded", function(e){
             p1_block1_arr[4].value = blockOnePossibles(dice_values_array, 5);
             p1_block1_arr[5].value = blockOnePossibles(dice_values_array, 6);
 
-            ////p1_block2_arr[0].value = calcPair(dice_values_array);   // ej gjord
-            ////p1_block2_arr[1].value = calcTwoPairs(dice_values_array);  // ej gjord
+            /* p1_block2_arr[0].value = 1;//calcPair(dice_values_array);   // ej gjord
+            p1_block2_arr[1].value = 1;//calcTwoPairs(dice_values_array);  // ej gjord
             p1_block2_arr[2].value = calcThreeKind(dice_values_array); //// Möjligt tretal detta kast? skickar värde
             p1_block2_arr[3].value = calcFourKind(dice_values_array); //// Möjligt fyrtal detta kast? skickar värde
             p1_block2_arr[4].value = calcSmStraight(dice_values_array); //// Möjlig small straight detta kast? skickar värde
             p1_block2_arr[5].value = calcLgStraight(dice_values_array); //// Möjlig large straight detta kast? skickar värde
             p1_block2_arr[6].value = calcFullHouse(dice_values_array);   //// Möjlig kåk detta kast? skickar värde
             p1_block2_arr[7].value = calcChance(dice_values_array); //// Möjlig Chance detta kast? skickar värde
-            p1_block2_arr[8].value = calcYatzy(dice_values_array); //// Möjlig yatzy detta kast? skickar värde
+            if (p1_block2_arr[8].style.opacity != "0.5") {
+                p1_block2_arr[8].value = calcYatzy(dice_values_array); //// Möjlig yatzy detta kast? skickar värde
+            } */
+
+            for ( let i = 0; i < block_2_func_arr.length; i++) {
+                if (p1_block2_arr[i].style.opacity != "0.5") {
+                    p1_block2_arr[i].value = block_2_func_arr[i](dice_values_array);
+                }
+            }
+            
 
             //*     p1_block2_arr MAP:   
             //*     0: Pair              
@@ -230,12 +242,26 @@ document.addEventListener("DOMContentLoaded", function(e){
             //*     8: Yatzy             
         }
 
+        
 
-
+        console.log("HÄR:" + blockTotal(1, 2));
         console.log("Nya tärningskastet med sparade tärningar: " + dice_values_array);
-        // throws_left --;  ////pausad tills vidare, slå på sen
+        throws_left --;  ////pausad tills vidare, slå på sen
     });
 
+   /*      ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
+        p1_sum.innerHTML = td_P1_block1_arr_int.reduce((acc, currValue) => {
+            return acc + currValue;
+        }, 0); ////Amanda: Funkar för nu eftersom vi redan har values 1 block1, behöver flyttas till efter tärningarna har kastats
+    
+        if (p1_sum.innerHTML >= 63) {  ////Amanda: flyttade bonusen hit, så den ligger i samband med att sum beräknas
+            p1_bonus.innerHTML = 50;   
+        } 
+        else {
+            p1_bonus.innerHTML = 0;
+        }
+
+        */
 
     //! TOGGLE KEEP DICE FUNCTION
     function toggleKeepers(i) {
@@ -257,6 +283,24 @@ document.addEventListener("DOMContentLoaded", function(e){
     //* GAME SCORE FUNCTIONS
     //=====================//
 
+    
+    
+    //! CALC TOTAL BLOCK VALUE /PLAYER
+    function blockTotal(player, block) {
+        let block_collection = document.getElementById("block" + block).getElementsByClassName("player" + player);
+        console.log(block_collection);
+        let block_arr = Array.from(block_collection);
+        console.log(block_arr);
+        let block_arr_int = block_arr.map((element) => { return parseInt(element.value)});
+        console.log(block_arr_int);
+        let total = block_arr_int.reduce((acc, currValue) => {
+            return acc + currValue;
+        }, 0); 
+
+        return total;
+    }
+
+    //! DISPLAY POSSIBLE SCORES BLOCK 1
     function blockOnePossibles(dice_arr, dice) {
         if (dice_arr.includes(dice)) {
             let filtered = dice_arr.filter((num, index, arr) => {
@@ -269,6 +313,22 @@ document.addEventListener("DOMContentLoaded", function(e){
             return 0;
         }
     } 
+
+    //! TWO PAIRS FUNCTION
+    function calcTwoPairs(numbers_array) {
+        let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
+        let total = 0;
+        let pairs = arr.filter((num, index, arr) => {
+            return num === 2 || num === 3;
+        });
+
+        if (pairs.length > 1) {
+            total = (pairs.reduce((accumulator, currentval) => accumulator + currentval)) * 2;
+
+        }
+        console.log(pairs);
+        return total;
+    }
 
     //! THREE OF A KIND FUNCTION
     function calcThreeKind(numbers_array) {
