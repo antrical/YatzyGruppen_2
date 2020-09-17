@@ -131,8 +131,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         console.log("Fem slumpade tärningar: " + random_throw); // Tärningarna som slumpades fram
 
 
-        let checkBoxArray = Array.from(document.getElementById("keep_value").getElementsByTagName("input"));
-        /*let checkBoxArray = Array.from(checkBoxCollection);
+        /* let checkBoxArray = Array.from(document.getElementById("keep_value").getElementsByTagName("input"));
+        let checkBoxArray = Array.from(checkBoxCollection);
         let checkBoxChecked = checkBoxArray.filter((object, index, array) => {
             return this.checked === true;
         }); */ //Behövs typ inte tror jag men det verkar funka
