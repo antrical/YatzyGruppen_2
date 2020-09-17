@@ -1,89 +1,23 @@
 document.addEventListener("DOMContentLoaded", function(e){
-    let p1 = document.getElementById("player1");                            
-    let p1_ones = document.getElementById("player1_ones"); ////objekt
-    let p1_twos = document.getElementById("player1_twos");
-    let p1_threes = document.getElementById("player1_threes");
-    let p1_fours = document.getElementById("player1_fours");
-    let p1_fives = document.getElementById("player1_fives");
-    let p1_sixes = document.getElementById("player1_sixes");
+
+    
+    
+    
+    ////part one
+    
+    //// Skapar en HTML Collection -> Array av td 1-6 för Player 1
+    let p1_block1_arr = Array.from(document.getElementById("block1").getElementsByClassName("player1"));
+    // let p1_block1_arr_int = p1_block1_arr.map((element, index, array) => { return parseInt(element.value)});
     let p1_sum = document.getElementById("player1_sum");
     let p1_bonus = document.getElementById("player1_bonus");
+
     ////part two
-    let p1_pair = document.getElementById("p1_pair");
-    let p1_two_pairs = document.getElementById("p1_two_pairs");
-    let p1_three_kind = document.getElementById("p1_three_kind");
-    let p1_four_kind = document.getElementById("p1_four_kind");
-    let p1_sm_str = document.getElementById("p1_sm_str");
-    let p1_lg_str = document.getElementById("p1_lg_str");
-    let p1_house = document.getElementById("p1_house");
-    let p1_chance = document.getElementById("p1_chance");
+    
+    //// Skapar en HTML Collection -> Array av td block2 för Player 1
+    let p1_block2_arr = Array.from(document.getElementById("block2").getElementsByClassName("player1"));
+    //let p1_block2_arr_int = p1_block2_arr.map((element, index, array) => { return parseInt(element.value)});
     let p1_yatzy = document.getElementById("p1_yatzy");
     let p1_total = document.getElementById("p1_total");
-    p1.addEventListener("change",function(e){
-        p1=p1.value;
-    })
-    /* p1.addEventListener("change",function(e){
-           p1= p1.value;
-        })
-        let number_array=[];
-        roll_dice.addEventListener("click",rollDice);
-        
-//slumpar värdet
-
-
-
-  function rollDice(){
-    for(let i=1;i<=5;i++){
-    if (document.getElementById("dice_"+i).checked){
-    }
-    else
-{
-let slump= Math.floor(Math.random()*6+1);
-document.getElementById("image_"+i).src=("dice_img_"+slump+".png")
-number_array[(i-1)]=slump;
-}}
-  console.log (number_array);
-  }}) */
-
-
-
-
-
-    ////tärnings-buttons att trycka på för att spara
-    document.getElementById("toggle_1").addEventListener("click", function(event){
-        event.preventDefault();
-        toggleKeepers(0);
-        console.log("toggled");
-    });;
-    document.getElementById("toggle_2").addEventListener("click", function(event){
-        event.preventDefault();
-        toggleKeepers(1);
-        console.log("toggled");
-    });;;
-    document.getElementById("toggle_3").addEventListener("click", function(event){
-        event.preventDefault();
-        toggleKeepers(2);
-        console.log("toggled");
-    });;;
-    document.getElementById("toggle_4").addEventListener("click", function(event){
-        event.preventDefault();
-        toggleKeepers(3);
-        console.log("toggled");
-    });;;
-    document.getElementById("toggle_5").addEventListener("click", function(event){
-        event.preventDefault();
-        toggleKeepers(4);
-        console.log("toggled");
-    });;;
-    
-    //// Skapar en HTML Collection av td 1-6 för Player 1
-    let td_P1_block1 = document.getElementById("block1").getElementsByClassName("player1");
-    //// Skapar en Array från vår hTML Collection
-    let td_P1_block1_arr = Array.from(td_P1_block1);
-    //// Skapar en Array 
-    let td_P1_block1_arr_int = td_P1_block1_arr.map((element, index, array) => { return parseInt(element.value)});
-
-    console.log(td_P1_block1_arr_int);  
 
 
     ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
@@ -103,43 +37,55 @@ number_array[(i-1)]=slump;
     let td_P1_block2_arr = Array.from(td_P1_block2);
     let td_P1_block2_arr_int = td_P1_block2_arr.map((element) => { return parseInt(element.value)});
 
+
+    /*  p1.addEventListener("change", function(e) {
+        p1= p1.value;
+    })
+    let number_array=[];
+    roll_dice.addEventListener("click",rollDice);
+//slumpar värdet
+    function rollDice(){
+        for(let i=1;i<=5;i++){
+            if (document.getElementById("dice_"+i).checked){
+            } else {
+                let slump = Math.floor(Math.random()*6+1);
+                document.getElementById("image_"+i).src=("dice_img_"+slump+".png")
+                number_array[(i-1)]=slump;
+            }
+        }
+        console.log (number_array);
+    } */
+   
+
     
     p1_total.innerHTML = td_P1_block2_arr_int.reduce((acc, currValue) => {
         return acc + currValue;
     }, 0); ////Amanda: funkar inte för nu, måste flyttas till efter tärningarna har kastats
 
-    let p1_td_score_array = [
-        p1_ones,  ////Amanda: Behövs den här arrayen längre?       Maja: jo hittills iaf!
-        p1_twos, 
-        p1_threes, 
-        p1_fours, 
-        p1_fives, 
-        p1_sixes
-    ];
 
-    let p1_td_second_score_array = [
-        p1_pair,
-        p1_two_pairs,
-        p1_three_kind,
-        p1_four_kind,
-        p1_sm_str,
-        p1_lg_str,
-        p1_house,
-        p1_chance,
-        p1_yatzy
-    ];                
 
-    //// tärningar att spara
+
     let keep_click_arr = [false, false, false, false, false];
-    
+    ////tärnings-buttons att trycka på för att spara 
+    for (let i = 0; i < 5; i++) {
+        document.getElementById("toggle_" + (i + 1)).addEventListener("click", function(event){
+            event.preventDefault();
+            toggleKeepers(i);
+            //? let button = i + 1;
+            //? console.log("toggled: " + button);
+            //? console.log(keep_click_arr);
+        });
+    }
 
 
+
+  
     let sum = 0;
 
     /*/sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
     //// La in Amandas i en loop istället, kallar fortf på Erikas addToSum vid varje td "change"
     //// Varje td score får varsin eventlistener: /M
-    for (let td_score of p1_td_score_array) {
+    for (let td_score of p1_block1_arr) {
         td_score.addEventListener("change", function(event){    //// ändra till click?
             //console.log(td_score);
             p1_sum.innerHTML = addToSum(td_score.value);
@@ -159,31 +105,25 @@ number_array[(i-1)]=slump;
     let roll_dice = document.getElementById("roll_dice");
     let dice_shown_img_arr = new Array(5);
     //// 5 träningar som syns i browsern     (vilket img-element skickar vi ut bilden till)
-    dice_shown_img_arr[0] = document.getElementById("dice_cell_1"); 
-    dice_shown_img_arr[1] = document.getElementById("dice_cell_2");
-    dice_shown_img_arr[2] = document.getElementById("dice_cell_3");
-    dice_shown_img_arr[3] = document.getElementById("dice_cell_4");
-    dice_shown_img_arr[4] = document.getElementById("dice_cell_5");
-
+    for (let i = 0; i < 5; i++) {
+        dice_shown_img_arr[i] = document.getElementById("dice_cell_" + ( i + 1 ));
+    }
 
     var dice_values_array = new Array(5);
-
-    var throws_left = 3;
-
-    //// tärningsbilder sparade i array
-    var dice_png_array = new Array(7);
-    dice_png_array[0] = "resources/images/dice/dice-zero.png";
-    dice_png_array[1] = "resources/images/dice/dice-one.png"; 
-    dice_png_array[2] = "resources/images/dice/dice-two.png";
-    dice_png_array[3] = "resources/images/dice/dice-three.png";
-    dice_png_array[4] = "resources/images/dice/dice-four.png";
-    dice_png_array[5] = "resources/images/dice/dice-five.png";
-    dice_png_array[6] = "resources/images/dice/dice-six.png";
-    
     //// alla tärningarna har noll från början, ingen tärning har kastats
     for (let i = 0; i < dice_values_array.length; i++) {
         dice_values_array[i] = 0;
     }
+
+    var throws_left = 3;
+
+    //// tärningsbilder sparade i array
+    var dice_png_array = new Array(7);   
+    for (let i = 0; i < 7; i++) {
+        dice_png_array[i] = "resources/images/dice/dice-" + i + ".png";
+    }
+    
+    
     
     //TODO:      ALLMÄN TO-DO LIST                                                         
     //TODO:  ( ) göra td_score klickbara                                                   
@@ -212,6 +152,15 @@ number_array[(i-1)]=slump;
         let random_throw = randomDiceArray();
         console.log("Fem slumpade tärningar: " + random_throw); // Tärningarna som slumpades fram
 
+
+
+        /* let checkBoxArray = Array.from(document.getElementById("keep_value").getElementsByTagName("input"));
+        let checkBoxArray = Array.from(checkBoxCollection);
+        let checkBoxChecked = checkBoxArray.filter((object, index, array) => {
+            return this.checked === true;
+        }); */ //Behövs typ inte tror jag men det verkar funka
+        
+
         //fixar check box
         let checkBoxCollection = document.getElementById("keep_value").getElementsByTagName("input");
         console.log(checkBoxCollection)
@@ -224,16 +173,16 @@ number_array[(i-1)]=slump;
         console.log(checkBoxChecked);
 
 
+
         //// & om man har inte slagit tre gånger redan
         if (throws_left > 0) {
             for (let i = 0; i < 5; i++) {
 
                 ////om tärning index [i] inte ska sparas:
-                if (!keep_click_arr[i]) {   //// (keep_click_arr[i] === false)
+                if (!checkBoxArray[i].checked) {   //// Alt till att klicka på själva tärningen
+                //if (!keep_click_arr[i]) {   //// (keep_click_arr[i] === false) båda funkar nu
                     dice_shown_img_arr[i].src = dice_png_array[random_throw[i]];  //// byter bild motsvarande randomized tärningskast-array
                     dice_values_array[i] = random_throw[i];
-
-                    
                 }   
             }
 
@@ -252,17 +201,33 @@ number_array[(i-1)]=slump;
             //TODO:    (x) yatzy                                                    
             //TODO:                                                                 
             
-            //console.log(td_P1);
+            p1_block1_arr[0].value = blockOnePossibles(dice_values_array, 1);
+            p1_block1_arr[1].value = blockOnePossibles(dice_values_array, 2);
+            p1_block1_arr[2].value = blockOnePossibles(dice_values_array, 3);
+            p1_block1_arr[3].value = blockOnePossibles(dice_values_array, 4);
+            p1_block1_arr[4].value = blockOnePossibles(dice_values_array, 5);
+            p1_block1_arr[5].value = blockOnePossibles(dice_values_array, 6);
 
+            ////p1_block2_arr[0].value = calcPair(dice_values_array);   // ej gjord
+            ////p1_block2_arr[1].value = calcTwoPairs(dice_values_array);  // ej gjord
+            p1_block2_arr[2].value = calcThreeKind(dice_values_array); //// Möjligt tretal detta kast? skickar värde
+            p1_block2_arr[3].value = calcFourKind(dice_values_array); //// Möjligt fyrtal detta kast? skickar värde
+            p1_block2_arr[4].value = calcSmStraight(dice_values_array); //// Möjlig small straight detta kast? skickar värde
+            p1_block2_arr[5].value = calcLgStraight(dice_values_array); //// Möjlig large straight detta kast? skickar värde
+            p1_block2_arr[6].value = calcFullHouse(dice_values_array);   //// Möjlig kåk detta kast? skickar värde
+            p1_block2_arr[7].value = calcChance(dice_values_array); //// Möjlig Chance detta kast? skickar värde
+            p1_block2_arr[8].value = calcYatzy(dice_values_array); //// Möjlig yatzy detta kast? skickar värde
 
-            p1_three_kind.value = calcThreeKind(dice_values_array); //// Möjligt tretal detta kast? skickar värde
-            p1_four_kind.value = calcFourKind(dice_values_array); //// Möjligt fyrtal detta kast? skickar värde
-            p1_house.value = calcFullHouse(dice_values_array);   //// Möjlig kåk detta kast? skickar värde
-            p1_sm_str.value = calcSmStraight(dice_values_array); //// Möjlig small straight detta kast? skickar värde
-            p1_lg_str.value = calcLgStraight(dice_values_array); //// Möjlig large straight detta kast? skickar värde
-            p1_yatzy.value = calcYatzy(dice_values_array); //// Möjlig yatzy detta kast? skickar värde
-            p1_chance.value = calcChance(dice_values_array); //// Möjlig Chance detta kast? skickar värde
-
+            //*     p1_block2_arr MAP:   
+            //*     0: Pair              
+            //*     1: Two Pairs         
+            //*     2: Three of a kind   
+            //*     3: Four of a kind    
+            //*     4: Small Straight    
+            //*     5: Large Straight    
+            //*     6: House             
+            //*     7: Chance            
+            //*     8: Yatzy             
         }
 
 
@@ -291,6 +256,19 @@ number_array[(i-1)]=slump;
 
     //* GAME SCORE FUNCTIONS
     //=====================//
+
+    function blockOnePossibles(dice_arr, dice) {
+        if (dice_arr.includes(dice)) {
+            let filtered = dice_arr.filter((num, index, arr) => {
+                return num === dice;
+            })
+            let sum = filtered.reduce((accumulator, currentval) => accumulator + currentval);
+
+            return sum;
+        } else {
+            return 0;
+        }
+    } 
 
     //! THREE OF A KIND FUNCTION
     function calcThreeKind(numbers_array) {
