@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         console.log(checkBoxChecked);
 
         let block_2_func_arr = [
-            calcTwoPairs,
+            calcPair,
             calcTwoPairs,
             calcThreeKind,
             calcFourKind,
@@ -193,8 +193,8 @@ document.addEventListener("DOMContentLoaded", function(e){
             //TODO:  - där OM möjligt score lägg in som värde på td-score           
             //TODO:    ________________________________________                     
             //TODO:                                                                 
-            //TODO:    ( ) Pair                                                     
-            //TODO:    ( ) Two pairs                                                
+            //TODO:    (x) Pair                                                     
+            //TODO:    (x) Two pairs                                                
             //TODO:    (x) Four of a kind                                           
             //TODO:    (x) Three of a kind                                          
             //TODO:    (x) sm_straight                                              
@@ -314,20 +314,56 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     } 
 
+    //! PAIR FUNCION
+    function calcPair(numbers_array){
+        let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
+        let pair_1_dice = 0;
+        let pair_2_dice = 0;
+        
+        arr.filter((num, index, arr) => {
+            if(num!==0 && num!==1){
+                pair_1_dice=arr.indexOf(num); ////Amanda: sparar vilken tärning som det fanns två av
+            }
+        });
+        arr[pair_1_dice]=0; ////Amanda: tar bort det första tärningsparet ur arrayen
+
+        arr.filter((num, index, arr) => {
+            if(num!==0 && num!==1){ ////Amanda: kollar ifall det finns ett till par med högre värde
+                pair_2_dice=arr.indexOf(num);
+            }
+        });
+        if(pair_1_dice<pair_2_dice){ ////Amanda: returnerar det paret med högst värde
+            return pair_2_dice*2;
+        }
+        else{
+            return pair_1_dice*2;
+        }
+    }
     //! TWO PAIRS FUNCTION
     function calcTwoPairs(numbers_array) {
         let arr = countDice(numbers_array); //// skicka vidare till countDice funktionen
-        let total = 0;
-        let pairs = arr.filter((num, index, arr) => {
-            return num === 2 || num === 3;
+        let pair_1_dice = 0;
+        let pair_2_dice = 0;
+        
+        arr.filter((num, index, arr) => {
+            if(num===2 || num===3){
+                pair_1_dice=arr.indexOf(num); ////Amanda: sparar vilken tärning som det fanns två av
+            }
         });
+        arr[pair_1_dice]=0; ////Amanda: tar bort det första tärningsparet ur arrayen
 
-        if (pairs.length > 1) {
-            total = (pairs.reduce((accumulator, currentval) => accumulator + currentval)) * 2;
-
+        arr.filter((num, index, arr) => {
+            if(num===2 || num===3){ ////Amanda: kollar ifall det finns ett till par med högre värde
+                pair_2_dice=arr.indexOf(num);
+            }
+        });
+        if(pair_2_dice>0 && pair_2_dice>0){
+            return pair_1_dice*2 + pair_2_dice*2;
         }
-        console.log(pairs);
-        return total;
+        else{
+            return 0;
+        }
+        
     }
 
     //! THREE OF A KIND FUNCTION
