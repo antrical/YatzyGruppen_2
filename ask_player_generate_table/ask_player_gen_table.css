@@ -128,3 +128,17 @@ tr.thead_header,
 .clicked {
     background-color: rgb(233, 236, 245);
 }
+
+
+/*// DICE */
+
+/* .dice_container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+} */
+
+.dice_img {
+    width: 70px;
+    height: auto;
+}

@@ -20,6 +20,192 @@ document.addEventListener("DOMContentLoaded", function(e) {
         "Chance:"];
     let total_score = "Total";
 
+    //// Class for array of (five) dice objects
+    class DiceArray {
+        constructor(keep_dice_arr = []) {
+            //this.keep_dice_arr = keep_dice_arr;
+            this.new_dice_obj_arr = [];
+
+            for (let i = 0; i < (5 - keep_dice_arr.length); i++) {
+                this.new_dice_obj_arr[i] = new Dice();
+            }
+            
+    
+            this.dice_values = []; // [0, 0, 0, 0, 0, 0, 0]
+            for (let i = 0; i <= 6; i++) {
+                this.dice_values[i] = 0;
+            }
+            
+            this.dice_arr = []; // [ x, x, x, x, x ]
+            for (let dice of this.new_dice_obj_arr) {
+                this.dice_arr.push(dice.value);
+            }
+
+            for (let dice of keep_dice_arr) {
+                this.new_dice_obj_arr.unshift(dice);
+            }
+
+            console.log(this.new_dice_obj_arr); //? testa att det funkar
+            console.log(this.dice_arr); //? testa att det funkar
+    
+            this.calcNumEachVal();
+        }
+        //// puts +1 in each box corresponding to dice numbers
+        calcNumEachVal() {  
+            this.new_dice_obj_arr.map(curr_val => {
+                this.dice_values[curr_val.value]++;
+            })
+        }
+        //* BLOCK 1 POSSIBLE SCORES
+        calcBlockOnePossibles(dice) {
+
+            if (this.dice_arr.includes(dice)) {
+                let filtered = this.dice_arr.filter((num) => {
+                    return num === dice;
+                })
+                
+                let sum = filtered.reduce((accumulator, currentval) => accumulator + currentval);
+                return sum;
+
+            } else {
+                return 0;
+            }
+        } 
+        //* PAIR
+        calcPair() {
+            let pair = 0;
+
+            for (let i = 0; i < this.dice_values.length; i++) {
+                if (this.dice_values[i] > 1) {
+                    if (pair < (i * 2)) {
+                        pair = (i * 2);
+                    }
+                }
+            }
+            return pair;
+
+        }
+        //* TWO PAIRS
+        calcTwoPairs() {
+            let pairs = 0;
+            let paircounter = 0;
+
+            for (let i = 0; i < this.dice_values.length; i++) {
+                if (this.dice_values[i] === 2 || this.dice_values[i] === 3) {
+                    pairs += (i * 2);
+                    paircounter++;
+                }
+            }
+            if (paircounter === 2) {
+                return pairs;
+            } else {
+                return 0;
+            }
+        }
+        //* THREE OF A KIND
+        calcThreeOfAKind() {  
+            let threes = 0;
+    
+            for (let i = 0; i < this.dice_values.length; i++) {
+                if (this.dice_values[i] === 3) {
+                    threes = i * 3;
+                }
+            }
+            return threes;
+        }
+        //* FOUR OF A KIND
+        calcFourOfAKind() {  
+            let fours = 0;
+    
+            for (let i = 0; i < this.dice_values.length; i++) {
+                if (this.dice_values[i] === 4) {
+                    fours = i * 4;
+                }
+            }
+            return fours;
+        }
+        //* HOUSE
+        calcFullHouse() {
+            let pair = 0;
+            let three_kind = 0;
+            let full_house_score = 0;
+        
+            if (arr.indexOf(2) > 0) {
+                pair = this.dice_values.indexOf(2); //// .indexOf letar efter värdet 2, returnar indexet
+            }
+            if (arr.indexOf(3) > 0) {
+                three_kind = this.dice_values.indexOf(3); //// returnar index av ev värde 3 i arrayen
+            }
+        
+            if (pair > 0 && three_kind > 0) { //// om det är en kåk, spara totala summan
+                full_house_score = (pair * 2) + (three_kind * 3);
+            }
+        
+            return full_house_score;    //// returnar värde 0 om ej kåk, eller summan av kåken
+        }
+        //* SMALL STRAIGHT
+        calcSmStraight() {
+            let is_sm_straight = 0;
+            for (let i = 1; i < 6; i++) {       //// kolla om index 1 - 5 innehåller värdet 1
+                if (this.dice_values[i] == 1) {
+                    is_sm_straight ++;
+                }
+            }
+            if (is_sm_straight === 5) { 
+                return 15;          //// om det är en liten straight, return totala summan (alltid 15)
+            } else {
+                return 0;
+            }
+        }
+        //* LARGE STRAIGHT
+        calcLgStraight() {
+            let is_lg_straight = 0;
+            for (let i = 2; i < 7; i++) {       //// kolla om index 1 - 5 innehåller värdet 1
+                if (this.dice_values[i] == 1) {
+                    is_lg_straight ++;
+                }
+            }
+            if (is_lg_straight === 5) { 
+                return 20;          //// om det är en liten straight, return totala summan (alltid 15)
+            } else {
+                return 0;
+            }
+        }
+        //* CHANCE
+        calcChance(dice) {
+            dice.reduce((prev_die, curr_die) => {
+                return prev_die + curr_die.value;
+            }, 0);
+        }
+        //* YATZY
+        calcYatzy() {
+            if (this.dice_values.includes(5)) {
+                return 50;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+    //// class for dice object 
+    class Dice {
+        constructor() {
+            this.value = this.new_value();
+        }
+        new_value() {
+            return Math.floor(Math.random() * 6) +1;
+        }
+    }
+
+
+
+    //* GAME    
+    // while () //// while total array tds inte ifyllda
+
+
+
+
+
     //// NEW GAME HEADER CLICK EVENT
     let new_game_button = document.getElementById("new_game_button");
     new_game_button.addEventListener("click", function(e) {
@@ -159,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     nameButton.addEventListener("click", function(e) {
                         enterName();
                     })
-
+                    //* generates table
                     function enterName() {
                         name_player_input.value = name_player_input.value.trim();
                         if (name_player_input.value.length > 0) {
@@ -183,10 +369,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
                             generateTableSum(players_arr, score_bonus_arr);
                             generateTable(players_arr, block2_titles);
                             generateTableTotal(players_arr, total_score);
-                            
+                            PlayNewGame();
                         }
                     } 
-                }                
+                }   
+             
             })
 
 
@@ -233,7 +420,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             nameButton.addEventListener("click", function(e) {
                 enterName();
             })
-
+            //* generates table
             function enterName() {
                 name_player_input.value = name_player_input.value.trim();
                 if (name_player_input.value.length > 0) {
@@ -258,8 +445,105 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     name_player_input.value= "";
                     name_player_input.focus();
                 }
+                PlayNewGame();
+
             }
         });
+
+    }
+    //! PLAY GAME FUNCTION  
+    function PlayNewGame() {
+        let throws_left = 3;
+        let dice_container = document.createElement("div");
+        dice_container.className = "dice_container";
+        main.appendChild(dice_container);
+
+        //// sökvägar till tärningar
+        var dice_png_arr = [];   // ["dice/.png" x 7]
+        for (let i = 0; i < 7; i++) {
+            dice_png_arr[i] = "resources/images/dice/dice-" + i + ".png";
+        }
+        //// img att visa tärningar i 
+        let dice_shown_arr = [];
+        let dice_shown_val_arr = [];
+        for (let i = 0; i < 5; i++) {
+            let dice_img = document.createElement("img");
+            dice_img.className = "dice_img unsaved";
+            dice_img.src = "resources/images/dice/dice-0.png"
+            dice_img.saved = false;
+            dice_img.value = 0;
+            dice_container.appendChild(dice_img);
+            dice_shown_arr.push(dice_img);
+            dice_shown_val_arr.push(dice_img.value);
+            //// toggle save dice event
+            dice_img.addEventListener("click", function(e) {
+                if (this.saved === false) {
+                    this.saved = true;
+                    this.className = "dice_img saved";
+                } else {
+                    this.saved = false;
+                    this.className = "dice_img unsaved";
+                }
+            });
+        }
+
+        let keep_dice_arr = [];
+
+        //// roll dice button 
+        let roll_dice_button = document.createElement("button");
+        roll_dice_button.className = "roll_dice_button";
+        roll_dice_button.innerHTML = "ROLL<br>DICE";
+        dice_container.appendChild(roll_dice_button);
+        
+        //* Roll dice event
+        roll_dice_button.addEventListener("click", function(e) {
+            if (throws_left != 0) {
+                for (let dice of dice_shown_arr) {
+                    if (dice.saved === true) {
+                        keep_dice_arr.push(dice.value);
+                    }
+                }
+                let new_throw = new DiceArray(keep_dice_arr);
+                let new_throw_values = [];
+                for (let dice of new_throw.new_dice_obj_arr) {
+                    new_throw_values.push(dice.value);
+                }
+                console.log(dice_shown_arr);
+                console.log(new_throw.new_dice_obj_arr);
+
+                console.log(new_throw.new_dice_obj_arr[0]);
+                console.log(new_throw.new_dice_obj_arr[0].value);
+                console.log("New throw values: " + new_throw_values);
+                console.log(new_throw_values);
+                console.log(dice_shown_arr[0].value);
+
+                
+                for (let i = 0; i < 6; i++) {
+                    dice_shown_val_arr[i] = new_throw_values[i];
+                    
+                    dice_shown_arr[i].src = dice_png_arr[dice_shown_arr[i].value];
+
+
+                    let new_value = new_throw.calcBlockOnePossibles(i + 1);
+
+                    changeScore(new_value, i, 1, "tbody_style");
+
+                }
+
+
+
+
+                
+                // throws_left--;
+            }
+        })
+
+        
+        
+
+
+
+        
     }
 
 
@@ -327,7 +611,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //// Game total      
     function generateTableTotal(players_array, block_titles) {
         let row = table.insertRow();
-        row.className = "thead";
+        row.className = "thead total_row";
         let cell = row.insertCell();
         cell.className = "thead_title";
         let text = document.createTextNode(block_titles);
@@ -339,7 +623,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
     }//* END OF GENERATE TABLE FUNCTIONS
 
-    
     
 
 }) //* End of DOM event
@@ -362,8 +645,9 @@ function displaySum(player) {
 }
 
 //! CHANGE innerHTML TOTAL by PLAYER
-function displayTotal(player) {
-    //TODO: lägg till funktion
+function displayTotal(new_value, player) {
+    let td = accessTd(0, player, "total_row");
+    td.innerHTML = new_value;
 }
 
 //! CHANGE innerHTML for PLAYER TD
@@ -400,6 +684,11 @@ function getTdBlockByPlayer(player, block_title_arr = "block1_titles", row_class
     }
     return arr;
 }
+
+//! CHECK IF TOTAL IS SET
+/* function checkIfTotal() {
+
+} */
 
 //! ACCESS SPECIFIC TD BY BLOCK, ROW & PLAYER        
 //* head honcho function : called on by most others  
