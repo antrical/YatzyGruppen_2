@@ -109,31 +109,58 @@ document.addEventListener("DOMContentLoaded", function(e){
     
     
     //TODO:      ALLMÄN TO-DO LIST                                                         
-    //TODO:  ( ) göra td_score klickbara                                                   
+    //TODO:  (X) göra td_score klickbara                                                   
     //TODO:  ( ) när man klickar en td_score cell:                                         
-    //TODO:  ( )      datan "fixeras" där så något sätt                                    
-    //TODO:  ( )      omgången avslutas (tex: throws_left = 0 eller rent av throws_left 3) 
-    //TODO:  ( )                         eller nåt mer exotiskt typ sätta igång nästa runda? kanske sen.... X´D 
-    //TODO:  ( )      snygga till css knappar osv.. borde synas på dem vilka som är "valda" också               
-    //TODO:  ( )      fyll på...                                                           
+    //TODO:  ( ) datan "fixeras" där så något sätt                                    
+    //TODO:  ( ) omgången avslutas (tex: throws_left = 0 eller rent av throws_left 3) 
+    //TODO:  ( ) eller nåt mer exotiskt typ sätta igång nästa runda? kanske sen.... X´D 
+    //TODO:  ( ) snygga till css knappar osv.. borde synas på dem vilka som är "valda" också               
+    //TODO:  ( ) fyll på...                                                           
     //TODO:  ( ) när alla td_scores i övre blocket har "valts" av spelaren räknas bonusen ut och visas
-    //TODO:  ( ) när tärningar kastas visas alla möjliga poäng även i övre blocket
+    //TODO:  (X) när tärningar kastas visas alla möjliga poäng även i övre blocket
     //TODO:  (/) skriv ut summan under övre blocket alltefter deras td score "valts"
+    //       (X) Edit: skriv ut summan under övre blocket när alla rutor är valda.
     //TODO:  ( ) Styling: Highlighta alla valda/upptagna td:s.
     //TODO:  ( ) Styling: Highlighta alla möjliga td:s att välja på som har poäng.
 
    
-
+    let new_p1_block1_arr = [];
     let yTable=document.getElementById("yatzyTable");
     yTable.addEventListener("click", function(e){
         if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
             // e.target.innerHTML.disabled = true;
             e.target.style.opacity = "0.5";
             e.target.style.setProperty("font-weight", "bold");
+
+            // Erika har pillat:
+            // Hämtar attributet id från det klickade td:t
+            let eTargetId = parseInt(e.target.getAttribute("id"));
+            // Skapar en array där värdet sparas på det index som id:t har.
+            new_p1_block1_arr[eTargetId] = parseInt(e.target.value);
+            // Skriver ut vad arrayen innehåller
+            console.log(" new_p1_block1_arr innehåller: " + new_p1_block1_arr);
+
+            // Om 6 td:s har klickats på så adderas värdena i arrayen ihop till en summa.
+            if (new_p1_block1_arr.length === 6) {
+                let sum_block1 = new_p1_block1_arr.reduce((acc, currValue) => {
+                    return acc + currValue;
+                }, 0); 
+                // Skriver ut summan i P1_sum
+                p1_sum.innerHTML = sum_block1;
+            }
+            
             console.log("CLICK!");
             throws_left = 3;
+           
+
+            // Erika: Försöker få värdena att stanna när dom är klickade, varför funkar inte????
+            e.target.setAttribute("disabled", true);
+            e.target.setAttribute("readonly", true);
+              
         }
     })
+
+    
 
 
 
