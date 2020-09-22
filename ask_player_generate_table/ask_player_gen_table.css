@@ -143,8 +143,12 @@ tr.thead_header,
     width: 70px;
     height: auto;
 }
+.saved {
+    opacity: 0.5;
+}
 
 .roll_dice_button {
     width: 60px;
     height: 60px;
 }
+

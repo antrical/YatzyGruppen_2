@@ -17,8 +17,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
         "Small straight:",
         "Large straight:",
         "Full house:",
-        "Chance:"];
-    let total_score = "Total";
+        "Chance:",
+        "Yatzy:"];
+        let total_score = "Total";
+        let throws_left = 3;
+        let saved = false;
 
     
 
@@ -42,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 while (table.firstChild) {
                     table.removeChild(table.lastChild);
                 }
+                /* while (main.firstChild) {
+                    main.removeChild(main.lastChild);
+                } */ //TODO: fixa detta
+                
                 newGameQuestions();   
             }
         } else if (in_questioning) {
@@ -279,19 +286,26 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //! PLAY GAME FUNCTION  
     function PlayNewGame() {
 
-        let throws_left = 3;
+        
         let dice_container = document.createElement("div");
         dice_container.className = "dice_container";
         main.appendChild(dice_container);
 
         //// Class for array of (five) dice objects
         class DiceArray {
-            constructor() {
-                //this.keep_dice_arr = keep_dice_arr;
+            constructor(keep_dice_arr = []) {
                 this.new_dice_obj_arr = [];
 
-                for (let i = 0; i < 5; i++) {
-                    this.new_dice_obj_arr[i] = new Dice();
+                this.keep_dice_arr = keep_dice_arr;
+
+                if (keep_dice_arr.length > 1) {
+                    for (let i = 0; i < 5; i++) {
+                        this.new_dice_obj_arr[i] = new Dice(keep_dice_arr[i]);
+                    }
+                } else {
+                    for (let i = 0; i < 5; i++) {
+                        this.new_dice_obj_arr[i] = new Dice();
+                    }
                 }
                 
         
@@ -299,17 +313,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 for (let i = 0; i <= 6; i++) {
                     this.dice_values[i] = 0;
                 }
+                this.calcNumEachVal();
                 
                 this.dice_arr = []; // [ x, x, x, x, x ]
                 for (let dice of this.new_dice_obj_arr) {
                     this.dice_arr.push(dice.value);
                 }
-
-                /* for (let dice of keep_dice_arr) {
-                    this.new_dice_obj_arr.unshift(dice);
-                } */
         
-                this.calcNumEachVal(); //? funkar verkligen bara så?
+
                 for (let i = 0; i < 6; i++) {
                     let new_value = this.calcBlockOnePossibles(i + 1);
                     changeScore(new_value, i, 1);
@@ -321,7 +332,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 changeScore(this.calcSmStraight(), 10, 1);
                 changeScore(this.calcLgStraight(), 11, 1);
                 changeScore(this.calcFullHouse(), 12, 1);
-                changeScore(this.calcYatzy(), 13, 1);
+                changeScore(this.calcChance(), 13, 1);
+                changeScore(this.calcYatzy(), 14, 1);
 
             }
             //// puts +1 in each box corresponding to dice numbers
@@ -446,10 +458,18 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 }
             }
             //* CHANCE
-            calcChance(dice) {
-                dice.reduce((prev_die, curr_die) => {
+            calcChance() {
+                let total = 0;
+                for (let num of this.dice_arr) {
+                    total += num;
+                }
+                /* let total = this.dice_arr.reduce((prev_die, curr_die) => {
+                    parseInt(curr_die);
                     return prev_die + curr_die.value;
-                }, 0);
+                }, 0);*/
+                
+                return total;
+
             }
             //* YATZY
             calcYatzy() {
@@ -463,152 +483,122 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
         //// class for dice object 
         class Dice {
-            constructor() {
-                //// sökvägar till tärningar
-                var dice_png_arr = [];   // ["dice/.png" x 7]
-                for (let i = 0; i < 7; i++) {
-                    dice_png_arr[i] = "resources/images/dice/dice-" + i + ".png";
-                }
-
-                this.value = this.new_value();
-
-                this.img = document.createElement("img");
-                this.img.className = "dice_img unsaved";
-                this.img.src = "resources/images/dice/dice-" + this.value + ".png"
-                this.saved = false;
-                dice_container.appendChild(this.img);
-                // dice_shown_arr.push(dice_img);
-                //// toggle save dice event
-                this.img.addEventListener("click", function(e) {
-                    if (e.target.saved === false) {
-                        e.target.saved = true;
-                        e.target.className = "dice_img saved";
-                        //? Uncaught TypeError: Cannot set property 'className' of undefined 
-
-                        console.log("saved");
-                    } else {
-                        e.target.saved = false;
-                        e.target.img.className = "dice_img unsaved";
-                        console.log("unsaved");
-                    }
-                });
+            constructor(keep) {
+                
+                this.value = this.roll(keep);
+                
+                
             }
-            rollagain() {
-                if (this.img.saved === false) {
-                    return Math.floor(Math.random() * 6) +1;
+            roll(keep) {
+                if (keep > 0) {
+                    return keep;
                 } else {
-                    return this.value;
-                }
-            }
-            new_value() {
-                return Math.floor(Math.random() * 6) +1;
+                    return Math.floor(Math.random() * 6) + 1;
+                } 
             }
         }
+        
+        //// sökvägar till tärningsbilder
+        var dice_png_arr = [];   // ["dice/.png" x 7]
+        for (let i = 0; i < 7; i++) {
+            dice_png_arr[i] = "resources/images/dice/dice-" + i + ".png";
+        }
+        //// class för fem img objekt
+        /* class DiceIcons {
+            constructor() {
+                this.img = document.createElement("img");
+                this.img.className = "dice_img unsaved";
+                this.img.src = "resources/images/dice/dice-0.png" //// gör loop
+                this.img.saved = false;
+                this.dice_container.appendChild(img);
+                //// toggle save dice event
+                this.img.addEventListener("click", function(e) {
+                    if (this.saved === false) {
+                        console.log("saved");
+                        img.className = "dice_img saved";
+                        this.saved = true;
+                        console.log(this.saved);
+                    } else {
+                        this.saved = false;
+                        console.log("unsaved");
+                        img.className = "dice_img unsaved";
+                        console.log(this.saved);
+                    }
+            });
+            }
+        } */
 
-
+        let img_array = [];
+        for (let i = 0; i < 5; i++) {
+            let img = document.createElement("img");
+            img.className = "dice_img unsaved";
+            img.src = "resources/images/dice/dice-0.png" //// gör loop
+            img.saved = false;
+            dice_container.appendChild(img);
+            //// toggle save dice event
+            img.addEventListener("click", function(e) {
+                if (this.saved === false) {
+                    console.log("saved");
+                    img.className = "dice_img saved";
+                    this.saved = true;
+                    console.log(this.saved);
+                } else {
+                    this.saved = false;
+                    console.log("unsaved");
+                    img.className = "dice_img unsaved";
+                    console.log(this.saved);
+                }
+            });
+            img_array.push(img);
+        }
+        let dice_arr = [];
         //// roll dice button 
         let roll_dice_button = document.createElement("button");
         roll_dice_button.className = "roll_dice_button";
         roll_dice_button.innerHTML = "ROLL<br>DICE";
         dice_container.appendChild(roll_dice_button);
-        let dice_arr;
+
         roll_dice_button.addEventListener("click", function(e) {
-            if (throws_left === 3) {
-                let new_throw = new DiceArray();
+            if (throws_left > 0) {
+                let keep_dice_arr = [];
+                for (let i = 0; i < 5; i++) {
+                    if (img_array[i].saved === true) {
+                        keep_dice_arr.push(dice_arr[i].value);
+                    } else {
+                        keep_dice_arr.push(0);
+                    }
+                } 
+                console.log(keep_dice_arr);//? test, ta bort
+                let new_throw = new DiceArray(keep_dice_arr);
                 dice_arr = new_throw.new_dice_obj_arr;
-                console.log(dice_arr);
-            } else if (throws_left === 2 || throws_left === 1) {
-                dice_arr.forEach(function (dice) {
-                    dice.rollagain();
-                })
+                assignImgSrc(dice_arr);
+                console.log(dice_arr);//? test, ta bort
+                /* if (saved === true) {
+                    throws_left = 3;
+                    saved = false;
+                    for (let img of img_array) {
+                        img.className = "dice_img unsaved";
+                        img.saved = false;
+
+                    }
+                } */
+                throws_left--;
+                
             } else {
                 alert("no throws left. choose a score.");
             }
-            throws_left--;
         })
-
-
-
-        /* //// sökvägar till tärningar
-        var dice_png_arr = [];   // ["dice/.png" x 7]
-        for (let i = 0; i < 7; i++) {
-            dice_png_arr[i] = "resources/images/dice/dice-" + i + ".png";
-        } */
-        //// img att visa tärningar i 
-        /* let dice_shown_arr = [];
-        for (let i = 0; i < 5; i++) {
-            let dice_img = document.createElement("img");
-            dice_img.className = "dice_img unsaved";
-            dice_img.src = "resources/images/dice/dice-0.png"
-            dice_img.saved = false;
-            dice_container.appendChild(dice_img);
-            dice_shown_arr.push(dice_img);
-            //// toggle save dice event
-            dice_img.addEventListener("click", function(e) {
-                if (this.saved === false) {
-                    this.saved = true;
-                    this.className = "dice_img saved";
-                } else {
-                    this.saved = false;
-                    this.className = "dice_img unsaved";
-                }
-            });
-        } */
-
-        // let keep_dice_arr = [];
-        
-        //* Roll dice event
-        /* roll_dice_button.addEventListener("click", function(e) {
-            if (throws_left != 0) {
-                for (let dice of dice_shown_arr) {
-                    if (dice.saved === true) {
-                        keep_dice_arr.push(dice.value);
-                    }
-                }
-                
-                let new_throw_values = [];
-                for (let dice of new_throw.new_dice_obj_arr) {
-                    new_throw_values.push(dice.value);
-                }
-                console.log(dice_shown_arr);
-                console.log(new_throw.new_dice_obj_arr);
-
-                console.log(new_throw.new_dice_obj_arr[0]);
-                console.log(new_throw.new_dice_obj_arr[0].value);
-                console.log("New throw values: " + new_throw_values);
-                console.log(new_throw_values);
-                console.log(dice_shown_arr[0].value);
-
-                
-                for (let i = 0; i < 6; i++) {
-                    
-                    dice_shown_arr[i].src = dice_png_arr[new_throw_values[i]];
-
-
-                    let new_value = new_throw.calcBlockOnePossibles(i + 1);
-
-                    changeScore(new_value, i, 1, "tbody_style");
-
-                }
-
-
-
-
-                
-                 throws_left--;
+        function assignImgSrc(dice_arr) {
+            for (let i = 0; i < 5; i++) {
+                img_array[i].src = "resources/images/dice/dice-" + dice_arr[i].value + ".png"
             }
-        }) */
-
-        
-        
-
-
-
+        }
         
     }
 
+    //TODO: lägg gameplayet i en class - då kan man anropa gameplay img och resetta spelet från td click
 
-        //! FUNCTIONS
+    //! FUNCTIONS
 
 
     //* GENERATE TABLE FUNCTIONS
@@ -627,7 +617,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //// Block 1  &  Block 2     
     function generateTable(players_array, block_titles) {   
         for (let i = 0; i < block_titles.length; i++) {
-            let array = []; //? ta bort?
             let row = table.insertRow();
             row.className = "tbody_style";
             let cell = row.insertCell();
@@ -638,11 +627,21 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 let cell = row.insertCell();
                 cell.className = "tbody_td";
                 cell.innerHTML = 0;
+                cell.clicked = false;
                 cell.addEventListener("click", function(event) {
                     if (this.className !== "tbody_td clicked") {
                         this.className = "tbody_td clicked";
-                        /* let index = this.cellIndex;
-                        sum_array[index].innerHTML = 5; */
+                        this.clicked = true;
+                        saved = true;
+                        throws_left = 3;
+                        saved = false;
+                        for (let img of img_array) {
+                            img.className = "dice_img unsaved";
+                            img.saved = false;
+    
+                        }
+                        
+                        
                     }
                 })
             }
@@ -651,7 +650,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //// Sum & bonus    
     function generateTableSum(players_array, block_titles) {
         for (let i = 0; i < block_titles.length; i++) {
-            let array = [];
             let row = table.insertRow();
             row.className = "thead sum_row"; 
             let cell = row.insertCell();
@@ -662,11 +660,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 cell.className = "thead_td";
                 cell.innerHTML = 0;
             }
-            /* if (i < 1) {
-                row.className = "thead sum_row";                
-            } else {
-                row.className = "thead bonus_row";                
-            } */
         }
     }
     //// Game total      
@@ -714,9 +707,10 @@ function displayTotal(new_value, player) {
 //! CHANGE innerHTML for PLAYER TD
 function changeScore(new_value, row, player, row_className = "tbody_style") {
     let td = accessTd(row, player, row_className);
-    td.innerHTML = new_value;
+    if (td.clicked === false) {
+        td.innerHTML = new_value;
+    }
 }
-
 
 //! GET TOTAL BLOCK SCORE BY PLAYER
 function getTotalBlockScore(player, block_title_arr = "block1_titles", row_className = "tbody_style") {
