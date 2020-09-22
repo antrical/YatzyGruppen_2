@@ -69,6 +69,8 @@ document.addEventListener("DOMContentLoaded", function(e){
     //sum +=Number(p1_ones.value); //verkade inte behövas?/M ////Amanda: Omvandlar p1_ones.value till number och adderar till summan
     //// La in Amandas i en loop istället, kallar fortf på Erikas addToSum vid varje td "change"
     //// Varje td score får varsin eventlistener: /M
+
+/*     
     for (let td_score of p1_block1_arr) {
         td_score.addEventListener("change", function(event){    //// ändra till click?
             //console.log(td_score);
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         });
     }
 
-    
+     */
 
     
     
@@ -130,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     //let yTable=document.getElementById("yatzyTable");
     block1.addEventListener("click", function(e){
         if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
-            // e.target.innerHTML.disabled = true;
             e.target.style.opacity = "0.5";
             e.target.style.setProperty("font-weight", "bold");
 
@@ -156,11 +157,10 @@ document.addEventListener("DOMContentLoaded", function(e){
                     p1_bonus.innerHTML = 0;
                 }
             }
-            // throws_left = 3;
-
+            throws_left = 3;
             // Erika: Försöker få värdena att stanna när dom är klickade, varför funkar inte????
-            e.target.setAttribute("disabled", true);
-            e.target.setAttribute("readonly", true);
+            e.target.disabled = true;
+            //e.target.setAttribute("readonly", true);
               
         }
     })
@@ -309,19 +309,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         throws_left --;  ////pausad tills vidare, slå på sen
     });
 
-   /*      ////Amanda: testar övingen "Hämta alla värden från 1-6 till en html-collection. Räkna ihop summan mha reduce" 
-        p1_sum.innerHTML = td_P1_block1_arr_int.reduce((acc, currValue) => {
-            return acc + currValue;
-        }, 0); ////Amanda: Funkar för nu eftersom vi redan har values 1 block1, behöver flyttas till efter tärningarna har kastats
-    
-        if (p1_sum.innerHTML >= 63) {  ////Amanda: flyttade bonusen hit, så den ligger i samband med att sum beräknas
-            p1_bonus.innerHTML = 50;   
-        } 
-        else {
-            p1_bonus.innerHTML = 0;
-        }
-
-        */
+ 
 
     //! TOGGLE KEEP DICE FUNCTION
     function toggleKeepers(i) {
@@ -417,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 pair_2_dice=arr.indexOf(num);
             }
         });
-        if(pair_2_dice>0 && pair_2_dice>0){
+        if(pair_1_dice>0 && pair_2_dice>0){
             return pair_1_dice*2 + pair_2_dice*2;
         }
         else{
@@ -568,8 +556,8 @@ function countDice(dice_array) {    //// dice_array innehåller de slumpade tär
     return values_array;
 }
 
-//! LÄGGER TILL VALD TD_SCORE TILL SUMMAN
+/* //! LÄGGER TILL VALD TD_SCORE TILL SUMMAN
 function addToSum(x){
     sum+=Number(x);
     return sum;
-}
+} */
