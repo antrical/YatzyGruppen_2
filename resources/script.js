@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     //// Skapar en HTML Collection -> Array av td block2 för Player 1
     let p1_block2_arr = Array.from(document.getElementById("block2").getElementsByClassName("player1"));
     //let p1_block2_arr_int = p1_block2_arr.map((element, index, array) => { return parseInt(element.value)});
-    let p1_yatzy = document.getElementById("p1_yatzy");
+    //let p1_yatzy = document.getElementById("p1_yatzy");
     let p1_total = document.getElementById("p1_total");
+ 
 
 
 
@@ -116,17 +117,18 @@ document.addEventListener("DOMContentLoaded", function(e){
     //TODO:  ( ) eller nåt mer exotiskt typ sätta igång nästa runda? kanske sen.... X´D 
     //TODO:  ( ) snygga till css knappar osv.. borde synas på dem vilka som är "valda" också               
     //TODO:  ( ) fyll på...                                                           
-    //TODO:  ( ) när alla td_scores i övre blocket har "valts" av spelaren räknas bonusen ut och visas
+    //TODO:  (X) när alla td_scores i övre blocket har "valts" av spelaren räknas bonusen ut och visas
     //TODO:  (X) när tärningar kastas visas alla möjliga poäng även i övre blocket
-    //TODO:  (/) skriv ut summan under övre blocket alltefter deras td score "valts"
-    //       (X) Edit: skriv ut summan under övre blocket när alla rutor är valda.
+    //TODO:  (X) skriv ut summan under övre blocket när alla rutor är valda.
     //TODO:  ( ) Styling: Highlighta alla valda/upptagna td:s.
     //TODO:  ( ) Styling: Highlighta alla möjliga td:s att välja på som har poäng.
 
-   
+
+    //! Skriv ut summa block 1
+    let block1 = document.getElementById("block1"); 
     let new_p1_block1_arr = [];
-    let yTable=document.getElementById("yatzyTable");
-    yTable.addEventListener("click", function(e){
+    //let yTable=document.getElementById("yatzyTable");
+    block1.addEventListener("click", function(e){
         if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
             // e.target.innerHTML.disabled = true;
             e.target.style.opacity = "0.5";
@@ -147,11 +149,14 @@ document.addEventListener("DOMContentLoaded", function(e){
                 }, 0); 
                 // Skriver ut summan i P1_sum
                 p1_sum.innerHTML = sum_block1;
+                
+                if (sum_block1 >= 63) {
+                    p1_bonus.innerHTML = 50;
+                } else {
+                    p1_bonus.innerHTML = 0;
+                }
             }
-            
-            console.log("CLICK!");
-            throws_left = 3;
-           
+            // throws_left = 3;
 
             // Erika: Försöker få värdena att stanna när dom är klickade, varför funkar inte????
             e.target.setAttribute("disabled", true);
@@ -159,6 +164,34 @@ document.addEventListener("DOMContentLoaded", function(e){
               
         }
     })
+
+     //! Skriv ut summa block 2
+    let block2 = document.getElementById("block2"); 
+    let new_p1_block2_arr = [];
+    block2.addEventListener("click", function(e){
+        if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
+            e.target.style.opacity = "0.5";
+            e.target.style.setProperty("font-weight", "bold");
+
+            let eTargetId = parseInt(e.target.getAttribute("id"));
+            // Skapar en array där värdet sparas på det index som id:t har.
+            new_p1_block2_arr[eTargetId] = parseInt(e.target.value);
+            // Skriver ut vad arrayen innehåller
+            console.log(" new_p1_block2_arr innehåller: " + new_p1_block2_arr);
+
+            // Om 8 td:s har klickats på så adderas värdena i arrayen ihop till en summa.
+            if (new_p1_block2_arr.length === 9) {
+                let sum_block2 = new_p1_block2_arr.reduce((acc, currValue) => {
+                    return acc + currValue;
+                }, 0); 
+                // Skriver ut summan i P1_total
+                p1_total.value = sum_block2 + parseInt(p1_sum.innerHTML) + parseInt(p1_bonus.innerHTML);
+            }
+            
+            throws_left = 3;
+              
+        }
+    }) 
 
     
 
