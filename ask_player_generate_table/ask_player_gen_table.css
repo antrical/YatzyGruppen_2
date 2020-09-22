@@ -132,13 +132,19 @@ tr.thead_header,
 
 /*// DICE */
 
-/* .dice_container {
+.dice_container {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-} */
+    align-items: center;
+}
 
 .dice_img {
     width: 70px;
     height: auto;
+}
+
+.roll_dice_button {
+    width: 60px;
+    height: 60px;
 }
