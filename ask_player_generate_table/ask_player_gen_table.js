@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let game_ongoing = false; //// true = spel pågår(table syns) | false = spel pågår ej(table syns ej)
     let in_questioning = false; //// true = frågor visas | false = frågor visas ej 
 
+    let current_player = 1; //! new
+
     let players_arr = []; //// hit skickas namnen på alla spelarna
     let block1_titles = ["Ones:", "Twos:", "Threes:", "Fours:", "Fives:", "Sixes:"]
     let score_bonus_arr = ["Sum:", "Bonus:"];
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         "Chance:",
         "Yatzy:"];
         let total_score = "Total";
-        let throws_left = 3; //// Ant slag kvar i början av en runda
+        
         
         //?let saved = false;
 
@@ -50,9 +52,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 while (table.firstChild) {
                     table.removeChild(table.lastChild);
                 }
-                /* while (main.firstChild) {
-                    main.removeChild(main.lastChild);
-                } */ //TODO: fixa detta
+                main.lastChild.remove(); //! ny
                 
                 newGameQuestions(); 
             }
@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     //! NEW GAME QUESTIONS
     function newGameQuestions() {
-        //players_arr = []; 
         in_questioning = true;
     
         ////container för allt i den här funktioner
@@ -193,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     name_button.addEventListener("click", function(e) {
                         enterName();
                     })
-                    //* generates table
+                    //* generates table when names are filled in
                     function enterName() {
                         name_player_input.value = name_player_input.value.trim(); //// tar bort mellanslagen om bara mellanslag i inputen
                         if (name_player_input.value.length > 0) {
@@ -293,8 +292,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     }
     //! PLAY GAME FUNCTION  
-    function PlayNewGame() {
+    function PlayNewGame() { //! new parameter
         game_ongoing = true;  
+        let throws_left = 3; //// Ant slag kvar i början av en runda
         let dice_container = document.createElement("div"); //// div att placera tärningar och knapp i
         dice_container.className = "dice_container";
         main.appendChild(dice_container);
@@ -346,8 +346,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     } else {
                         keep_dice_arr.push(0);
                     }
-                } 
-                let new_throw = new DiceArray(keep_dice_arr); //// Skapar ett objekt som innehåller 5 tärningar. Parameter exempel:
+                }                          //! new parameter
+                let new_throw = new DiceArray(current_player, keep_dice_arr); //// Skapar ett objekt som innehåller 5 tärningar. Parameter exempel:
                                                               //// [0, 2, 0, 6, 1] - value 0 = slå om, value > 0 = behåll
                 dice_arr = new_throw.dice_obj_arr;            //// Kommer innehålla kastet med fem tärningsobjekt som genereras från DiceArray (Papa Dice)
                 for (let i = 0; i < 5; i++) {
@@ -355,17 +355,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                                                                                   //// För att ge rätt bild så grågar vi dice arr vilket värde den har
                                                                                                   //// och ger den rätt sökväg.
                 }
-                // console.log(keep_dice_arr);//? test, ta bort
-                // console.log(dice_arr);//? test, ta bort
-                /* if (saved === true) {
-                    throws_left = 3;
-                    saved = false;
-                    for (let img of img_array) {
-                        img.className = "dice_img unsaved";
-                        img.saved = false;
-                    //TODO: flytta till td event - gör så att dice_container children remove() och PlayNewGame() körs igen
-                    }
-                } */
                 throws_left--;
                 
             } else {
@@ -409,19 +398,45 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 cell.innerHTML = 0;
                 cell.clicked = false;
                 cell.addEventListener("click", function(event) {
-                    if (this.className !== "tbody_td clicked") {
-                        this.className = "tbody_td clicked";
-                        this.clicked = true;
-                        saved = true;
-                        throws_left = 3;
-                        saved = false;
-                        /* for (let img of img_array) {
-                            img.className = "dice_img unsaved";
-                            img.saved = false;
+                    if (this === this.parentNode.childNodes[current_player]) {  //// NEW, checks if "this" is in the right column, same as current player
+                        if (this.className !== "tbody_td clicked") {
+                            this.className = "tbody_td clicked";
+                            this.clicked = true;
+                            
+                            for (let i = 0; i < 15; i++) {  //// NEW clear all un-clicked scores from current player
+                                changeScore(0, i, current_player);      //// (15 clickable rows to check)
+                            }
+
+                            displaySumAndBonus(current_player);
+                            displayTotal(current_player);
+                            let set_totals = checkIfTotal(players_arr);
+                            if (set_totals) {
+                                let winner = getWinner(players_arr);
+                                if (confirm("Congratulations, " + winner + "! Play another game?")) {
+                                    table.style.display = "none";
+                                    game_ongoing = false;
+
+                                    while (table.firstChild) {
+                                        table.removeChild(table.lastChild);
+                                    }
+                                    main.lastChild.remove(); //! ny
+                                    newGameQuestions(); 
+                                }
+                            }
+                            
+                            //! new  
+                            ////updates current player to send which player will play next round to PlayNewGame function
+                            if (current_player < players_arr.length) {
+                                current_player++;
+                            } else if (current_player = players_arr.length) {
+                                current_player = 1;
+                            }
     
-                        } */
-                        
-                        
+                            main.lastChild.remove(); //// new, remove dice_container (last child of main)
+                            PlayNewGame(current_player);
+                            
+                            
+                        }
                     }
                 })
             }
@@ -456,35 +471,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
             cell.innerHTML = 0;
         }
     }//* END OF GENERATE TABLE FUNCTIONS
-
     
-
+    
+    
 }) //* End of DOM event
 
-//! CALC & DISPLAY BONUS
-function displayBonus(player) {
-    let bonus_td = accessTd(1, player, "sum_row");
-    let sum_td = accessTd(0, player, "sum_row").innerHTML;
-    if (sum_td > 63) {
-        bonus_td.innerHTML = 50;
-        console.log("Hello");
-    }
-}
 
-//! CHANGE innerHTML SUM by PLAYER
-function displaySum(player) {
-    let td = accessTd(0, player, "sum_row");
-    let score = getTotalBlockScore(player);
-    td.innerHTML = score;
-}
-
-//! CHANGE innerHTML TOTAL by PLAYER
-function displayTotal(new_value, player) {
-    let td = accessTd(0, player, "total_row");
-    td.innerHTML = new_value;
-}
-
-//! CHANGE innerHTML for PLAYER TD
+//! CHANGE innerHTML for PLAYER table data / cell
 function changeScore(new_value, row, player, row_className = "tbody_row") {
     let td = accessTd(row, player, row_className);
     if (td.clicked === false) {
@@ -492,9 +485,56 @@ function changeScore(new_value, row, player, row_className = "tbody_row") {
     }
 }
 
+//! CHANGE innerHTML SUM and BONUS by PLAYER
+function displaySumAndBonus(player) {
+    if(checkAllChosen(1, player)) {
+        let sum_td = accessTd(0, player, "sum_row");
+        let bonus_td = accessTd(1, player, "sum_row");
+        let score = getTotalBlockScore(player, 1);
+        sum_td.innerHTML = score;
+        if (sum_td >= 63) {
+            bonus_td.innerHTML = 50;
+        }
+    }
+}
+
+//! CHANGE innerHTML TOTAL by PLAYER if all td:s are chosen
+function displayTotal(player) {
+    let all_chosen = checkAllChosen(2, player);
+    if (all_chosen) {
+        let sum_td = Number(accessTd(0, player, "sum_row").innerHTML);
+        let bonus_td = Number(accessTd(1, player, "sum_row").innerHTML);
+        let block2total = getTotalBlockScore(player, 2);
+        let total_td = accessTd(0, player, "total_row");
+        total_td.innerHTML = sum_td + bonus_td + block2total;
+    }
+}
+
+//! CHECK if ALL BLOCK 1 or ALL td:s ARE CHOSEN
+function checkAllChosen(block, player) {
+    let all_chosen = true;
+    if (block === 1) {
+        for (let i = 0; i < 6; i++) {
+            let td = accessTd(i, player);
+            if (td.clicked === false) {
+                all_chosen = false;
+            }
+        }
+    } else {
+        for (let i = 0; i < 15; i++) {
+            let td = accessTd(i, player);
+            if (td.clicked === false) {
+                all_chosen = false;
+            }
+        }
+    }
+    return all_chosen;
+}
+
+
 //! GET TOTAL BLOCK SCORE BY PLAYER
-function getTotalBlockScore(player, block_title_arr = "block1_titles", row_className = "tbody_row") {
-    let scores = getTdBlockNumsByPlayer(player, block_title_arr ,row_className);
+function getTotalBlockScore(player, block = 1, row_className = "tbody_row") {
+    let scores = getTdBlockNumsByPlayer(player, block ,row_className);
     let total = scores.reduce((acc, currVal, currIndex, arr) => {
         return acc + currVal;
     }, 0);
@@ -502,28 +542,52 @@ function getTotalBlockScore(player, block_title_arr = "block1_titles", row_class
 }
 
 //! GET ALL TDs NUMBERS BY BLOCK / PLAYER
-function getTdBlockNumsByPlayer(player, block_title_arr = "block1_titles", row_className = "tbody_row") {
+function getTdBlockNumsByPlayer(player, block = 1, row_className = "tbody_row") {
     let arr = [];
-    for (let i = 0; i < block_title_arr.length; i++) {
-        let num = Number(accessTd(i, player, row_className).innerHTML);
-        arr.push(num);
+    if(block === 1) {
+        for (let i = 0; i < 6; i++) {
+            let num = Number(accessTd(i, player, row_className).innerHTML);
+            arr.push(num);
+        }
+    } else {
+        for (let i = 6; i < 9; i++) {
+            let num = Number(accessTd(i, player, row_className).innerHTML);
+            arr.push(num);
+        }
     }
     return arr;
 }
 
-//! GET ALL TDs BY BLOCK / PLAYER
-function getTdBlockByPlayer(player, block_title_arr = "block1_titles", row_className = "tbody_row") {
-    let arr = [];
-    for (let i = 0; i < block_title_arr.length; i++) {
-        arr.push(accessTd(i, player, row_className));
-    }
-    return arr;
-}
 
 //! CHECK IF TOTAL IS SET
-/* function checkIfTotal() {
+function checkIfTotal(players_arr) {
+    let are_all_set = true;
+    for (player in players_arr) {
+        let total_td = accessTd(0, player, "total_row");
+        if (Number(total_td.innerHTML) == 0) {
+            are_all_set = false;
+        }
+    } ////nåt är fel
+    return are_all_set;
+}
 
-} */
+//! CHECK who's the WINNER
+function getWinner(players_arr) {
+    let totals_row = Array.from(document.getElementsByClassName("total_row"));
+    let largest_num = 0;
+    let current_num = 0;
+
+    for (player in players_arr) {
+        let total_td_num = totals_row.childNodes[player].innerHTML;
+        current_num = total_td_num;
+        largest_num = Math.max(largest_num, current_num);
+    }
+    let winner = players_arr[totals_row.indexOf(largest_num)];
+
+    return winner;
+}
+
+
 
 //! ACCESS SPECIFIC TD BY BLOCK, ROW & PLAYER        
 //* head honcho function : called on by most others  
