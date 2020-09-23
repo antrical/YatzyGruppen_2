@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let in_questioning = false;
 
     let players_arr = [];
-    let block1_titles = ["Ones:", "Twos:", "Threes:", "Fours:", "Fives:", "Sixes:"]
+    /* let block1_titles = ["Ones:", "Twos:", "Threes:", "Fours:", "Fives:", "Sixes:"]
     let score_bonus_arr = ["Sum:", "Bonus:"];
     let block2_titles = [
         "Pair:", 
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
         "Full house:",
         "Chance:",
         "Yatzy:"];
-        let total_score = "Total";
-        let throws_left = 3;
-        let saved = false;
+    let total_score = "Total"; */
+    let throws_left = 3;
+    let saved = false;
 
     
 
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 for (let i = 0; i <= 6; i++) {
                     this.dice_values[i] = 0;
                 }
-                this.calcNumEachVal();
+                this.calcNumEachVal(); //// +1 in each box depending on thrown dice
                 
                 this.dice_arr = []; // [ x, x, x, x, x ]
                 for (let dice of this.new_dice_obj_arr) {
@@ -485,17 +485,23 @@ document.addEventListener("DOMContentLoaded", function(e) {
         class Dice {
             constructor(keep) {
                 
-                this.value = this.roll(keep);
+                // this.value = this.roll(keep);
+                this.value = this.roll();
                 
-                
+                //TODO: ELLER anropa JUST bara den tärning som SKA kastas om
+                //TODO: denhär.roll
             }
-            roll(keep) {
+            /* roll(keep) {
                 if (keep > 0) {
                     return keep;
                 } else {
                     return Math.floor(Math.random() * 6) + 1;
                 } 
+            } */
+            roll() {
+                return Math.floor(Math.random() * 6) + 1;
             }
+
         }
         
         //// sökvägar till tärningsbilder
