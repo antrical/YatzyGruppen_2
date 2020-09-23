@@ -1,0 +1,154 @@
+body,
+nav,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    color: unset;
+}
+
+html {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/**         HEADER         */
+
+.header_banner h1,
+.header_banner li {
+    color: rgb(77, 86, 117);
+}
+
+div.header_banner {
+    background-color: rgb(227, 231, 241);
+    padding: 17px 20px 20px 20px;
+    box-shadow: 0px -11px 19px rgb(190, 194, 209);
+
+}
+
+div.header_banner,
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li {
+    list-style: none;
+    margin: 10px;
+    border-bottom: 1px solid transparent;
+    /* color: rgb(97, 106, 139); */
+    transition: all 0.3s ease-in-out 0.03s;
+}
+
+li:hover {
+    color: rgb(121, 129, 160);
+    border-bottom: 1px solid rgb(177, 185, 212);
+}
+
+/**  */
+
+.main_container {
+    width: 400px;
+    height: 200px;
+    margin: 50px auto;
+    background-color: rgb(227, 231, 241);
+    border-radius: 6px;
+    box-shadow: 0px 6px 12px rgb(180, 186, 207);
+}
+
+.questions_container,
+.answers_container {
+    width: 320px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.answer_button {
+    width: 100px;
+    height: 80px;
+    margin: 5px;
+}
+.question {
+    margin-top: 25px;
+}
+
+#main {
+    width: 80vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+
+table {
+    /* background-color: rgb(227, 231, 241); */
+    margin: 30px;
+    color: rgb(77, 86, 117);
+    border: 10px solid rgb(77, 86, 117);
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+
+tr {
+    height: 25px;;
+}
+
+td {
+    margin: 0;
+}
+
+td + td {
+    min-width: 100px;
+    /* border: 1px solid rgb(182, 182, 182); */
+    background-color: rgb(255, 255, 255);
+}
+
+tr.thead_header,
+.thead_header td,
+.sum_row td,
+.thead td {
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: rgb(227, 231, 241);
+}
+
+.clicked {
+    background-color: rgb(233, 236, 245);
+}
+
+
+/*// DICE */
+
+.dice_container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dice_img {
+    width: 70px;
+    height: auto;
+}
+.saved {
+    opacity: 0.5;
+}
+
+.roll_dice_button {
+    width: 60px;
+    height: 60px;
+}
+

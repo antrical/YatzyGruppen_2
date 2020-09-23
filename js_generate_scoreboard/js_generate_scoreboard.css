@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.95em;
+    margin: 0;
+}
+
+table {
+    background-color: rgb(226, 226, 226);
+}
+
+.tbody {
+    color: rgb(146, 146, 146);
+}
+
+.thead,
+.thead_header{
+    font-weight: bold;
+}
+
+tr {
+    height: 25px;;
+}
+
+td {
+    width: 120px;
+}
+
+td + td {
+    width: 80px;
+    /* border: 1px solid rgb(182, 182, 182); */
+    background-color: rgb(255, 255, 255);
+}
+
+tr.thead_header {
+    font-size: 1.1em;
+    /* background-color: red; */
+}
+
+.clicked {
+    background-color: rgb(238, 238, 238);
+}
