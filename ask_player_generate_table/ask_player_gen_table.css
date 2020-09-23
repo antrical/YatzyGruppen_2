@@ -152,3 +152,6 @@ tr.thead_header,
     height: 60px;
 }
 
+.highlight_button {
+    opacity: 0.5;
+}
