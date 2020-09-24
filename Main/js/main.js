@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let game_ongoing = false; //// true = spel pågår(table syns) | false = spel pågår ej(table syns ej)
     let in_questioning = false; //// true = frågor visas | false = frågor visas ej 
 
-    let current_player = 1; //! new
+    let current_player = 1; //// keeps track of which player will be next
 
     let players_arr = []; //// hit skickas namnen på alla spelarna
     let block1_titles = ["Ones:", "Twos:", "Threes:", "Fours:", "Fives:", "Sixes:"]
@@ -23,20 +23,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         "Chance:",
         "Yatzy:"];
         let total_score = "Total";
-        
-        
-        //?let saved = false;
-
-    
-
-
-
-    //* GAME    
-    // while () //// while total array tds inte ifyllda
-
-
-
-
+  
 
     //// NEW GAME BUTTON CLICK EVENT 
     let new_game_button = document.getElementById("new_game_button");
@@ -52,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 while (table.firstChild) {
                     table.removeChild(table.lastChild);
                 }
-                main.lastChild.remove(); //! ny
+                main.lastChild.remove(); //// remove dice container
                 
                 newGameQuestions(); 
             }
@@ -216,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                             generateTableSum(players_arr, score_bonus_arr);
                             generateTable(players_arr, block2_titles);
                             generateTableTotal(players_arr, total_score);
-                            PlayNewGame();
+                            PlayNewGame(current_player);
                         }
                     } 
                 }     
@@ -271,8 +258,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
                     main_container.remove();
 
-                    table.style.display = "";
-                    in_questioning = false;    
+                    game_ongoing = true;  
+                    in_questioning = false;  
+                    table.style.display = ""; //// display "none" tas bort - visas table igen 
                     
                     //// skapar innehåll i table utifrån arrayer
                     generateTableHead(players_arr);
@@ -285,14 +273,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     name_player_input.value= "";
                     name_player_input.focus();
                 }
-                PlayNewGame();
+                PlayNewGame(current_player);
 
             }
         });
 
     }
     //! PLAY GAME FUNCTION  
-    function PlayNewGame() { //! new parameter
+    function PlayNewGame(current_player) { //! new parameter
         game_ongoing = true;  
         let throws_left = 3; //// Ant slag kvar i början av en runda
         let dice_container = document.createElement("div"); //// div att placera tärningar och knapp i
@@ -347,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                         keep_dice_arr.push(0);
                     }
                 }                          //! new parameter
-                let new_throw = new DiceArray(current_player, keep_dice_arr); //// Skapar ett objekt som innehåller 5 tärningar. Parameter exempel:
+                let new_throw = new FiveDice(current_player, keep_dice_arr); //// Skapar ett objekt som innehåller 5 tärningar. Parameter exempel:
                                                               //// [0, 2, 0, 6, 1] - value 0 = slå om, value > 0 = behåll
                 dice_arr = new_throw.dice_obj_arr;            //// Kommer innehålla kastet med fem tärningsobjekt som genereras från DiceArray (Papa Dice)
                 for (let i = 0; i < 5; i++) {
@@ -584,7 +572,7 @@ function getWinner(players_arr) {
     }
     let winner = players_arr[totals_row.indexOf(largest_num)];
 
-    return winner;
+    return winner; //// funkar inte än
 }
 
 

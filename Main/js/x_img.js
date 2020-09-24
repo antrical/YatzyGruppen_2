@@ -1,5 +1,5 @@
-//// class för fem img objekt
-//! används inte än
+/* //// class för fem img objekt
+//! används inte än, får testa mer senare
 class DiceIcons {
     constructor() {
         this.img = document.createElement("img");
@@ -42,4 +42,4 @@ class DiceIcons {
                 console.log(this.saved);
             }
     }
-}
+} */

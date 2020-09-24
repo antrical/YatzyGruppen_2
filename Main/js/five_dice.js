@@ -1,6 +1,6 @@
 //// Class for array of (five) dice objects
-class DiceArray {//! new parameter 
-    constructor(player, keep_dice_arr = []) { //// innehåller 5 index med value 0 om man INTE vill spara eller värdet på tärningen man VILL spara. 
+class FiveDice {//! new parameter 
+    constructor(current_player, keep_dice_arr = []) { //// innehåller 5 index med value 0 om man INTE vill spara eller värdet på tärningen man VILL spara. 
 
         this.dice_obj_arr = []; //// Skapar arrayen som ska innehålla 5 tärningar
 
@@ -9,7 +9,6 @@ class DiceArray {//! new parameter
         for (let i = 0; i < 5; i++) { //// Skapar en ny tärning 5 gånger genom att skapa ett objekt från klassen Dice.Nya tärningen läggs in i dice_obj_array
             this.dice_obj_arr[i] = new Dice(keep_dice_arr[i]); //// Dice kommer ge oss en ny tärning för dom vi vill slå om. Annars ger den oss det gamla värdet.
         }
-        
 
         this.dice_values = []; // [0, 0, 0, 0, 0, 0, 0] //// skapar en array för att sen räkna hur många av varje tärning. Fylls med nollor for now.
         for (let i = 0; i <= 6; i++) {
@@ -25,17 +24,17 @@ class DiceArray {//! new parameter
 
         for (let i = 0; i < 6; i++) {
             let new_value = this.calcBlockOnePossibles(i + 1); //// skickas till filtered reduce metod (rad 50). 
-            changeScore(new_value, i, player);       //// uppdaterar varje cell i block ett med rätt värde. (Kommer från rad 56 ish) 
+            changeScore(new_value, i, current_player);       //// uppdaterar varje cell i block ett med rätt värde. (Kommer från rad 56 ish) 
         }
-        changeScore(this.calcPair(), 6, player); //// changeScore(funktion räknar ut om värdet av par() 6 = vilken rad i tablet det ska hamna på, 1 = vilken player den ska hamna på)
-        changeScore(this.calcTwoPairs(), 7, player);
-        changeScore(this.calcThreeOfAKind(), 8, player);
-        changeScore(this.calcFourOfAKind(), 9, player);
-        changeScore(this.calcSmStraight(), 10, player);
-        changeScore(this.calcLgStraight(), 11, player);
-        changeScore(this.calcFullHouse(), 12, player);
-        changeScore(this.calcChance(), 13, player);
-        changeScore(this.calcYatzy(), 14, player);
+        changeScore(this.calcPair(), 6, current_player); //// changeScore(funktion räknar ut om värdet av par() 6 = vilken rad i tablet det ska hamna på, 1 = vilken current_player den ska hamna på)
+        changeScore(this.calcTwoPairs(), 7, current_player);
+        changeScore(this.calcThreeOfAKind(), 8, current_player);
+        changeScore(this.calcFourOfAKind(), 9, current_player);
+        changeScore(this.calcSmStraight(), 10, current_player);
+        changeScore(this.calcLgStraight(), 11, current_player);
+        changeScore(this.calcFullHouse(), 12, current_player);
+        changeScore(this.calcChance(), 13, current_player);
+        changeScore(this.calcYatzy(), 14, current_player);
 
     }
     //// puts +1 in each index corresponding to dice numbers
