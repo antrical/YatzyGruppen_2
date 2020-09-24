@@ -81,7 +81,7 @@ class FiveDice {
         let paircounter = 0;
 
         for (let i = 0; i < this.dice_values.length; i++) {
-            if (this.dice_values[i] === 2 || this.dice_values[i] === 3) {
+            if (this.dice_values[i] >=2) {
                 pairs += (i * 2);
                 paircounter++;
             }
