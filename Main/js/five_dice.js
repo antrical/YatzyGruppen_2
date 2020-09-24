@@ -67,9 +67,7 @@ class FiveDice {
 
         for (let i = 0; i < this.dice_values.length; i++) {
             if (this.dice_values[i] > 1) {
-                if (pair < (i * 2)) {
                     pair = (i * 2);
-                }
             }
         }
         return pair;
