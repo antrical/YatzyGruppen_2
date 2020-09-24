@@ -10,11 +10,14 @@ class FiveDice {//! new parameter
             this.dice_obj_arr[i] = new Dice(keep_dice_arr[i]); //// Dice kommer ge oss en ny tärning för dom vi vill slå om. Annars ger den oss det gamla värdet.
         }
 
-        this.dice_values = []; // [0, 0, 0, 0, 0, 0, 0] //// skapar en array för att sen räkna hur många av varje tärning. Fylls med nollor for now.
+       /* this.dice_values = []; // [0, 0, 0, 0, 0, 0, 0] //// skapar en array för att sen räkna hur många av varje tärning. Fylls med nollor for now.
         for (let i = 0; i <= 6; i++) {
             this.dice_values[i] = 0;
-        }
-        this.calcNumEachVal(); ////
+        }*/
+
+        this.dice_values = new Array(7).fill(0);
+
+        this.calcNumEachVal(); ////Uppdaterar dice values (rad 13)
         
         this.dice_arr = []; // [ x, x, x, x, x ]
         for (let dice of this.dice_obj_arr) {
