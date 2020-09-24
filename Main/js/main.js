@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     let current_player = 1; //// keeps track of which player will be next
 
-    let players_arr = []; //// hit skickas namnen på alla spelarna
+    let player_names = []; //// hit skickas namnen på alla spelarna
     let block1_titles = ["Ones:", "Twos:", "Threes:", "Fours:", "Fives:", "Sixes:"]
     let score_bonus_arr = ["Sum:", "Bonus:"];
     let block2_titles = [
@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //! NEW GAME QUESTIONS
     function newGameQuestions() {
         in_questioning = true;
+        player_names = [];
     
         ////container för allt i den här funktioner
         let main_container = document.createElement("div");
@@ -155,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
                         button.remove();
                     }
                     submit_button.remove();
-
                     
                     //// <input> element där man matar in namn
                     let name_player_input = document.createElement("input");
@@ -183,14 +183,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     function enterName() {
                         name_player_input.value = name_player_input.value.trim(); //// tar bort mellanslagen om bara mellanslag i inputen
                         if (name_player_input.value.length > 0) {
-                            players_arr.push(name_player_input.value); //// skickar namnet till vår player-namn array 
+                            player_names.push(name_player_input.value); //// skickar namnet till vår player-namn array 
                             player_number++;
                             name_player_input.value = "";
                             question.innerHTML = "Enter name of player " + player_number;
                             //console.log(name_player_input.value);
                             //console.log(players_arr);
                         }
-                        if (players_arr.length < num_of_players) {
+                        if (player_names.length < num_of_players) {
                             name_player_input.focus();
                         } else {
                             main_container.remove();
@@ -198,11 +198,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
                             table.style.display = ""; //// display "none" tas bort - visas table igen 
                             game_ongoing = true;  
                             in_questioning = false;                          
-                            generateTableHead(players_arr);
-                            generateTable(players_arr, block1_titles);
-                            generateTableSum(players_arr, score_bonus_arr);
-                            generateTable(players_arr, block2_titles);
-                            generateTableTotal(players_arr, total_score);
+                            generateTableHead();
+                            generateTable(block1_titles);
+                            generateTableSum(score_bonus_arr);
+                            generateTable(block2_titles);
+                            generateTableTotal(total_score);
                             PlayNewGame(current_player);
                         }
                     } 
@@ -250,11 +250,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
             function enterName() {
                 name_player_input.value = name_player_input.value.trim();
                 if (name_player_input.value.length > 0) {
-                    players_arr.push(name_player_input.value);
-                    players_arr.push("Computer");
+                    player_names.push(name_player_input.value);
+                    player_names.push("Computer");
                     console.log(name_player_input.value);
                     question.innerHTML = "Enter you name";
-                    console.log(players_arr);
 
                     main_container.remove();
 
@@ -263,11 +262,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     table.style.display = ""; //// display "none" tas bort - visas table igen 
                     
                     //// skapar innehåll i table utifrån arrayer
-                    generateTableHead(players_arr);
-                    generateTable(players_arr, block1_titles);
-                    generateTableSum(players_arr, score_bonus_arr);
-                    generateTable(players_arr, block2_titles);
-                    generateTableTotal(players_arr, total_score);
+                    generateTableHead();
+                    generateTable(block1_titles);
+                    generateTableSum(score_bonus_arr);
+                    generateTable(block2_titles);
+                    generateTableTotal(total_score);
                     
                 } else {
                     name_player_input.value= "";
@@ -334,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                     } else {
                         keep_dice_arr.push(0);
                     }
-                }                          //! new parameter
+                }                         
                 let new_throw = new FiveDice(current_player, keep_dice_arr); //// Skapar ett objekt som innehåller 5 tärningar. Parameter exempel:
                                                               //// [0, 2, 0, 6, 1] - value 0 = slå om, value > 0 = behåll
                 dice_arr = new_throw.dice_obj_arr;            //// Kommer innehålla kastet med fem tärningsobjekt som genereras från DiceArray (Papa Dice)
@@ -353,26 +352,26 @@ document.addEventListener("DOMContentLoaded", function(e) {
         
     }
 
-    //TODO: lägg gameplayet i en class - då kan man anropa gameplay img och resetta spelet från td click
+    //TODO: lägg gameplayet i en class - då kan man anropa gameplay img och resetta spelet från td click 
 
     //! FUNCTIONS
 
 
     //* GENERATE TABLE FUNCTIONS
     //// Player names   
-    function generateTableHead(players_array, class_name = "thead_header") {
+    function generateTableHead(class_name = "thead_header") {
         let row = table.insertRow();
         let cell = row.insertCell();
         let text = document.createTextNode("Players:");
         cell.appendChild(text);
         row.className = class_name;
-        for (let player of players_array) {
+        for (let player of player_names) {
             let cell = row.insertCell();
             cell.innerHTML = player;
         }
     }
-    //// Block 1  &  Block 2     
-    function generateTable(players_array, block_titles) {   
+    //// Block 1  &  Block 2    
+    function generateTable(block_titles) {   
         for (let i = 0; i < block_titles.length; i++) {
             let row = table.insertRow();
             row.className = "tbody_row";
@@ -380,16 +379,16 @@ document.addEventListener("DOMContentLoaded", function(e) {
             cell.className = "tbody_title";
             let text = document.createTextNode(block_titles[i]);
             cell.appendChild(text);
-            for (let i = 0; i < players_array.length; i++) {
+            for (let i = 0; i < player_names.length; i++) {
                 let cell = row.insertCell();
                 cell.className = "tbody_td";
                 cell.innerHTML = 0;
                 cell.clicked = false;
                 cell.addEventListener("click", function(event) {
                     if (this === this.parentNode.childNodes[current_player]) {  //// NEW, checks if "this" is in the right column, same as current player
-                        if (this.className !== "tbody_td clicked") {
-                            this.className = "tbody_td clicked";
+                        if (this.clicked == false) {
                             this.clicked = true;
+                            this.className = "tbody_td clicked";
                             
                             for (let i = 0; i < 15; i++) {  //// NEW clear all un-clicked scores from current player
                                 changeScore(0, i, current_player);      //// (15 clickable rows to check)
@@ -397,9 +396,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
                             displaySumAndBonus(current_player);
                             displayTotal(current_player);
-                            let set_totals = checkIfTotal(players_arr);
+                            /* let set_totals = checkIfTotal(player_names);
                             if (set_totals) {
-                                let winner = getWinner(players_arr);
+                                let winner = getWinner(player_names);
                                 if (confirm("Congratulations, " + winner + "! Play another game?")) {
                                     table.style.display = "none";
                                     game_ongoing = false;
@@ -407,16 +406,15 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                     while (table.firstChild) {
                                         table.removeChild(table.lastChild);
                                     }
-                                    main.lastChild.remove(); //! ny
+                                    main.lastChild.remove(); //? funkar inte än
                                     newGameQuestions(); 
                                 }
-                            }
+                            } */
                             
-                            //! new  
                             ////updates current player to send which player will play next round to PlayNewGame function
-                            if (current_player < players_arr.length) {
+                            if (current_player < player_names.length) {
                                 current_player++;
-                            } else if (current_player = players_arr.length) {
+                            } else if (current_player = player_names.length) {
                                 current_player = 1;
                             }
     
@@ -431,14 +429,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
     }
     //// Sum & bonus    
-    function generateTableSum(players_array, block_titles) {
+    function generateTableSum(block_titles) {
         for (let i = 0; i < block_titles.length; i++) {
             let row = table.insertRow();
             row.className = "thead sum_row"; 
             let cell = row.insertCell();
             cell.className = "thead_title";
             cell.innerHTML = block_titles[i];
-            for (let j = 0; j < players_array.length; j++) {
+            for (let j = 0; j < player_names.length; j++) {
                 let cell = row.insertCell();
                 cell.className = "thead_td";
                 cell.innerHTML = 0;
@@ -446,14 +444,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
     }
     //// Game total      
-    function generateTableTotal(players_array, block_titles) {
+    function generateTableTotal(block_titles) {
         let row = table.insertRow();
         row.className = "thead total_row";
         let cell = row.insertCell();
         cell.className = "thead_title";
         let text = document.createTextNode(block_titles);
         cell.appendChild(text);
-        for (let i = 0; i < players_array.length; i++) {
+        for (let i = 0; i < player_names.length; i++) {
             let cell = row.insertCell();
             cell.className = "thead_td";
             cell.innerHTML = 0;

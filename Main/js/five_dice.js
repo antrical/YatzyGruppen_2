@@ -1,5 +1,5 @@
 //// Class for array of (five) dice objects
-class FiveDice {//! new parameter 
+class FiveDice {
     constructor(current_player, keep_dice_arr = []) { //// innehåller 5 index med value 0 om man INTE vill spara eller värdet på tärningen man VILL spara. 
 
         this.dice_obj_arr = []; //// Skapar arrayen som ska innehålla 5 tärningar
