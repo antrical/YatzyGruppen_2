@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         if (e.target.tagName =="INPUT" && e.target.value != "undefined") {
             e.target.style.opacity = "0.5";
             e.target.style.setProperty("font-weight", "bold");
-
+            e.target.disabled = true;
             // Erika har pillat:
             // Hämtar attributet id från det klickade td:t
             let eTargetId = parseInt(e.target.getAttribute("id"));
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             }
             throws_left = 3;
             // Erika: Försöker få värdena att stanna när dom är klickade, varför funkar inte????
-            e.target.disabled = true;
+            
             //e.target.setAttribute("readonly", true);
               
         }

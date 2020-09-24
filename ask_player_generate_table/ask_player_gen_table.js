@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 //! CHANGE innerHTML for PLAYER table data / cell
 function changeScore(new_value, row, player, row_className = "tbody_row") {
     let td = accessTd(row, player, row_className);
-    if (td.clicked === false) {
+    if (td.clicked === false) {     // Om poängen är sparad av spelaren sen tidigare, byts inte värdet.
         td.innerHTML = new_value;
     }
 }

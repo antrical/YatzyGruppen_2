@@ -95,7 +95,7 @@ class DiceArray {//! new parameter
         let threes = 0;
 
         for (let i = 0; i < this.dice_values.length; i++) {
-            if (this.dice_values[i] === 3) {
+            if (this.dice_values[i] >= 3) {
                 threes = i * 3;
             }
         }
@@ -106,7 +106,7 @@ class DiceArray {//! new parameter
         let fours = 0;
 
         for (let i = 0; i < this.dice_values.length; i++) {
-            if (this.dice_values[i] === 4) {
+            if (this.dice_values[i] >= 4) {
                 fours = i * 4;
             }
         }
