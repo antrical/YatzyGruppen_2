@@ -478,7 +478,7 @@ function displaySumAndBonus(player) {
         let bonus_td = accessTd(1, player, "sum_row");
         let score = getTotalBlockScore(player, 1);
         sum_td.innerHTML = score;
-        if (sum_td >= 63) {
+        if (sum_td.innerHTML >= 63) {
             bonus_td.innerHTML = 50;
         }
     }
